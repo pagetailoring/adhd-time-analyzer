@@ -1,0 +1,22 @@
+{
+  "name": "noop-fallback-layer",
+  "type": "module",
+  "author": "pagetailoring",
+  "version": "0.0.1",
+  "private": false,
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "latest",
+    "eslint": "^9.25.1",
+    "nuxt": "^3.17.1",
+    "vue": "latest"
+  }
+}

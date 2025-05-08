@@ -1,0 +1,44 @@
+{
+  "name": "adhd-time-analyzer",
+  "version": "0.3.0",
+  "author": "pagetailoring",
+  "description": "Nuxt UI-based interface for the app",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "analyze": "nuxi analyze  --dotenv ../.env.demo",
+    "build": "nuxi build  --dotenv ../.env.demo",
+    "clean": "nuxi cleanup  --dotenv ../.env.demo",
+    "dev": "nuxi dev --dotenv ../.env.local",
+    "generate": "nuxi generate",
+    "host": "nuxi dev --host --dotenv ../.env.local",
+    "preview": "nuxi preview",
+    "postinstall": "nuxi prepare --dotenv ../.env.local",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "up": "nuxi upgrade  --dotenv ../.env.demo",
+    "upgrade": "nuxi upgrade  --dotenv ../.env.demo"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^3.1.1",
+    "@pinia/nuxt": "^0.11.0",
+    "@vueuse/nuxt": "^13.1.0",
+    "nuxt": "^3.17.1",
+    "pinia": "^3.0.2",
+    "pinia-plugin-persistedstate": "^4.2.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/html-validator": "^2.1.0",
+    "@types/fs-extra": "^11.0.4",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.3.1",
+    "fs-extra": "^11.3.0",
+    "nuxt-payload-analyzer": "^0.1.4",
+    "prettier": "^3.5.3",
+    "rollup-plugin-license": "^3.6.0",
+    "typescript": "^5.8.3",
+    "vue-tsc": "^2.2.10"
+  }
+}

@@ -1,0 +1,43 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+*public/LICENSES.txt
+app/public/LICENSES.txt
+
+# Node dependencies
+node_modules
+
+# config
+firebase/utils/config-firebase.ts
+
+# dev notes
+*__dev*
+
+# Local env files
+.env
+.env.*
+!.env.local
+!.env.demo
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Yarn
+.yarn/cache
+.yarn/*state*
+
+# Local History
+.history
+
+# VSCode
+.vscode/
