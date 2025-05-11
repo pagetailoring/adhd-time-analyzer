@@ -15,15 +15,11 @@ export const useAnalyzerSummaryStore = defineStore('summary', () => {
   const totalTrackedMinutes = computed(() =>
     summary.value.reduce((sum: number, item: SummaryItem) => sum + item.totalTime, 0)
   )
+
   // Formatted total (e.g., "2h 15m")
-  const { get: formatTime } = useFormattedTime()
   const totalTrackedTime = computed(() => formatTime(totalTrackedMinutes.value))
 
-  // Flag indicating summary has been computed at least once
-  const isSummaryReady = ref<boolean>(false)
-
   function updateSummary(logs: TimeLog[]) {
-    console.log('💹..')
     const summaryMap: Record<string, number> = {}
     for (const log of logs) {
       const cat = log.act?.toLowerCase()
@@ -33,7 +29,7 @@ export const useAnalyzerSummaryStore = defineStore('summary', () => {
     summary.value.forEach((item: SummaryItem) => {
       item.totalTime = summaryMap[item.label] ?? 0
     })
-    isSummaryReady.value = true
+    console.log('🔄')
   }
 
   const data = computed<SummaryItem[]>(() =>
@@ -42,8 +38,7 @@ export const useAnalyzerSummaryStore = defineStore('summary', () => {
   )
 
   const { timeLogsToDisplay } = storeToRefs(useAnalyzerViewStore())
-
-  const effectiveDayStart = useEffectiveDayStart(timeLogsToDisplay)
+  const effectiveDayStart = useEffectiveDayStart(timeLogsToDisplay.value)
 
   const dayStartAt = computed(() =>
     effectiveDayStart.value
@@ -61,7 +56,5 @@ export const useAnalyzerSummaryStore = defineStore('summary', () => {
     totalTrackedTime,
     effectiveDayStart,
     dayStartAt,
-
-    isSummaryReady,
   }
 })

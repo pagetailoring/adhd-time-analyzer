@@ -5,7 +5,7 @@ export function useAnalyzerCreateInDatabase() {
   const { timeLogsToDisplay } = storeToRefs(store)
   const { pushNewRecord } = useTimeLogsPush()
   const { display, displayError } = useNotifications()
-  const buff = useAnalyzerBufferStore()
+  const { addOrUpdateLogInCache } = useCacheBufferMethods()
 
   const isError = ref<boolean>(false)
 
@@ -17,15 +17,15 @@ export function useAnalyzerCreateInDatabase() {
       await save(newRecord, store.path)
       if (newId.value) {
         pushNewRecord({ id: newId.value, ...newRecord }, timeLogsToDisplay)
-        buff.addOrUpdateOne({ id: newId.value, ...newRecord })
+        addOrUpdateLogInCache({ id: newId.value, ...newRecord })
       } else console.log(piniaWrong)
     } catch (err) {
       isError.value = true
       const error = err as FirebaseError
-      displayError(fireIcon + piniaIcon + `add error: ${error.message}`)
+      displayError(fireIcon + piniaIcon + `💾 error: ${error.message}`)
       console.log(error)
     } finally {
-      if (!isError.value) display(`${newRecord.act} saved at ${newRecord.ts}`)
+      if (!isError.value) display(`💾 ${newRecord.act} saved at ${newRecord.ts}`)
     }
   }
 

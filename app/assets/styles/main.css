@@ -1,2 +1,8 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
+
+@theme {
+  /* break points for shorcuts bar Skeleton: sc2 to 2 lines.. etc. */
+  --breakpoint-sc2: 32rem;
+  --breakpoint-sc1: 56.6rem;
+}

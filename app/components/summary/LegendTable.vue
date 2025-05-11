@@ -15,14 +15,17 @@ const columns = computed<TableColumn<SummaryItem>[]>(() => {
 })
 
 const defaultSortingStats: ColumnSort[] = [{ id: 'totalTime', desc: true }]
+
+const emit = defineEmits<{ (event: 'isMounted'): void }>()
+onMounted(() => emit('isMounted'))
 </script>
 
 <template>
-  <small class="-mb-6 opacity-70">
+  <small class="-mb-6 opacity-70 mt-3">
     <small :class="styleUp">LEGEND</small>
   </small>
 
-  <UTable :data="rows" :columns="columns" :sorting="defaultSortingStats">
+  <UTable :data="rows" :columns="columns" :sorting="defaultSortingStats" class="mb-2">
     <template #label-cell="{ row }">
       <span class="flex items-center">
         <span class="mr-3 h-4 w-4 rounded-full" :style="`background: ${row.original.color}`" />

@@ -3,6 +3,11 @@
  * Handles missing logs or logs recorded at night, ensuring correct day separation.
  */
 
+const getNowHour = (now: Ref<Date, Date>): number => Number(useDateFormat(now, 'HH').value)
+const getHourFromLog = (log: TimeLog): number => Number(log.ts.slice(0, 2))
+const isNightTime = (hour: number): boolean => hour <= NIGHT_TIME_END_HOUR
+const isDayTime = (hour: number): boolean => hour >= DAY_TIME_START_HOUR
+
 export function useEdgeCases(
   dayToDisplayDate: Ref<string>,
   dayToLoadDate: Ref<string>,
@@ -12,11 +17,6 @@ export function useEdgeCases(
   const { detectDayStart } = useEffectiveNightGapAutoDetect()
   const { getShiftedDateString } = useDateTime()
   const { now } = storeToRefs(useClockStore())
-
-  const getNowHour = (): number => Number(useDateFormat(now, 'HH').value)
-  const getHourFromLog = (log: TimeLog): number => Number(log.ts.slice(0, 2))
-  const isNightTime = (hour: number): boolean => hour <= NIGHT_TIME_END_HOUR
-  const isDayTime = (hour: number): boolean => hour >= DAY_TIME_START_HOUR
 
   function processFirstLogOfDayCycle(
     logs: Ref<TimeLog[]>,
@@ -53,7 +53,7 @@ export function useEdgeCases(
 
   function processEdgeCases(logs: Ref<TimeLog[]>, displayedDaysCount: Ref<number>) {
     // ⚙️ processing edge cases
-    const nowHour = getNowHour()
+    const nowHour = getNowHour(now)
     const length = logs.value.length
 
     console.log(message, length, '⚙️')

@@ -1,12 +1,20 @@
-// Grouped array of keys for USelect (string[][])
-export const mainActivityTags: string[][] = (() => {
-  const sorted = mainActivityConfig.slice().sort((a, b) => a.orderInSelect - b.orderInSelect)
+function getSliceAndSorted(array: MainActivityTag[]): MainActivityTag[] {
+  return array.slice().sort((a, b) => a.order - b.order)
+}
+
+function getArrayOfArrays(array: MainActivityTag[], valKey: 'color' | 'key'): string[][] {
+  const sorted = getSliceAndSorted(array)
   const groups: Record<string, string[]> = {}
   for (const item of sorted) {
-    if (!groups[item.groupInSelect]) groups[item.groupInSelect] = []
-    groups[item.groupInSelect].push(item.key)
+    if (!groups[item.group]) groups[item.group] = []
+    groups[item.group].push(item[valKey])
   }
   return Object.values(groups)
+}
+
+// Grouped array of keys for USelect (string[][])
+export const mainActivityTags: string[][] = (() => {
+  return getArrayOfArrays(mainActivityConfig, 'key')
 })()
 
 // Flat array of keys (string[]) for scenarios requiring a single-level list
@@ -14,13 +22,7 @@ export const mainActivityTagsFlat: string[] = mainActivityTags.flat()
 
 // Array of colors matching the order of mainActivityTagsFlat
 export const mainActivityColors: string[] = (() => {
-  const sorted = mainActivityConfig.slice().sort((a, b) => a.orderInSelect - b.orderInSelect)
-  const groups: Record<string, string[]> = {}
-  for (const item of sorted) {
-    if (!groups[item.groupInSelect]) groups[item.groupInSelect] = []
-    groups[item.groupInSelect].push(item.color)
-  }
-  return Object.values(groups).flat()
+  return getArrayOfArrays(mainActivityConfig, 'color').flat()
 })()
 
 // Helper function returning default tags and duration for a given key

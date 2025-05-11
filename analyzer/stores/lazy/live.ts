@@ -3,7 +3,6 @@ export const useAnalizerLiveStatsStore = defineStore('live', () => {
     storeToRefs(useAnalyzerSummaryStore())
   const { isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
   const { now } = storeToRefs(useClockStore())
-  const { get: formatTime } = useFormattedTime()
 
   // reactive state for live stats
   const minutesFromDayStart = ref<number>(0)

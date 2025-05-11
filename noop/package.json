@@ -1,9 +1,10 @@
 {
-  "name": "noop-fallback-layer",
+  "name": "nuxt-firebase",
   "type": "module",
   "author": "pagetailoring",
-  "version": "0.0.1",
+  "description": "Firebase Layer — handles authentication and Firestore integration.",
   "private": false,
+  "version": "0.0.1",
   "main": "./nuxt.config.ts",
   "scripts": {
     "dev": "nuxi dev .playground",
@@ -17,6 +18,11 @@
     "@nuxt/eslint": "latest",
     "eslint": "^9.25.1",
     "nuxt": "^3.17.1",
+    "typescript": "^5.8.3",
+    "vue-tsc": "^2.2.10",
     "vue": "latest"
+  },
+  "dependencies": {
+    "firebase": "^11.6.1"
   }
 }

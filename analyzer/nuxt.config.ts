@@ -8,13 +8,13 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       'data',
+      'composables/crud',
+      'composables/components',
       'stores',
-      'stores/cache',
-      'stores/crud',
-      'stores/database',
       'types',
       'utils',
       'utils/config',
+      'utils/time-logs',
     ],
   },
   devtools: { enabled: true },

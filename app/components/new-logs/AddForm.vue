@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { useAnalyzerFormStore } = await import('analyzer/stores/lazy/form')
 const form = useAnalyzerFormStore()
 const { activity, durationMinutes, tags, timeTags, trackTags, qualityRate, note } =
   storeToRefs(form)
@@ -7,7 +8,7 @@ const tagsSelect = [activities, coding, work, life, homeStuff, sport, appetite]
 const trackTagsSelect = [toTrackProjects, toTrackWork, toTrackLife]
 const timeTagsSelect = [timeManagement, quality]
 
-const addStore = useAnalyzerCreateStore()
+const addStore = useAnalyzerCreate()
 const { merge } = useTagsMerge()
 const handleSubmit = async () => {
   const newLog = form.getNewTimeLog()
@@ -25,6 +26,9 @@ const resetTrack = () => resetArray(trackTags)
 const resetTime = () => resetArray(timeTags)
 
 const content: TooltipContentConfig = { side: 'top' }
+
+const emit = defineEmits<{ (event: 'isMounted'): void }>()
+onMounted(() => emit('isMounted'))
 </script>
 
 <template>
@@ -58,7 +62,7 @@ const content: TooltipContentConfig = { side: 'top' }
         type="submit"
         color="primary"
         class="justify-center uppercase text-sm rounded-xl px-4"
-        label="Save"
+        label="Save new"
       />
 
       <UInput

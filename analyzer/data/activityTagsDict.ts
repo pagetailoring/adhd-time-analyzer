@@ -14,8 +14,9 @@ export const life: string[] = [
   'life',
   'relax',
   'self care',
-  'watching',
   'listening',
+  'reading',
+  'watching',
   'go out',
   'get up',
   //
@@ -63,15 +64,18 @@ export const sport: string[] = [
 export const toTrackWork: string[] = [
   'touch base',
   'new features',
+  'logic improvements',
   'layers',
   // 'migration'
 ]
+
 export const toTrackProjects: string[] = [
   'analizer app',
   'micro auth app',
   'project x',
   'project y',
 ]
+
 export const toTrackLife: string[] = ['self care', 'sport', 'home stuff']
 
 export const timeManagement: string[] = [

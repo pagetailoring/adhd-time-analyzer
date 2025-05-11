@@ -22,7 +22,7 @@ export const useAnalyzerViewStore = defineStore('view', () => {
   )
 
   // 🍍 Data fetching logic ----------------
-  const { fetchDayData } = useAnalyzerFetchStore()
+  const { fetchDayData } = useAnalyzerRead()
 
   async function getNewDayData(date: string) {
     // Original logic now uses fetchDayData
@@ -61,6 +61,8 @@ export const useAnalyzerViewStore = defineStore('view', () => {
 
   return {
     timeLogsToDisplay,
+
+    processIncomingData,
 
     path,
     dayToDisplayDate,

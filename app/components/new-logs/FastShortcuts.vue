@@ -1,20 +1,15 @@
 <script setup lang="ts">
-const addStore = useAnalyzerCreateStore()
+const { useAnalyzerFormStore } = await import('analyzer/stores/lazy/form')
 const form = useAnalyzerFormStore()
 
 const tagToAdd = ref<undefined | string>()
 
+const { saveNew } = useAnalyzerCreate()
 function commit(activity: string, minutes: number) {
   const newLog: TimeLog = form.getNewTimeLog()
-  const { tags: defaultTags } = form.getDefaults(activity) || {} // Zwracamy domyślne wartości z getMainActivityDefaults
-
-  if (defaultTags) {
-    newLog.tags = defaultTags
-  }
-
-  if (tagToAdd.value) {
-    newLog.tags.push(tagToAdd.value)
-  }
+  const { tags: defaultTags } = form.getDefaults(activity) || {}
+  if (defaultTags) newLog.tags = defaultTags
+  if (tagToAdd.value) newLog.tags.push(tagToAdd.value)
 
   const temp =
     work.includes(activity) || coding.includes(activity) || activity === 'coding'
@@ -22,16 +17,14 @@ function commit(activity: string, minutes: number) {
       : newLog.tags.concat(form.timeTags)
 
   newLog.tags = Array.from(new Set(temp))
-
   newLog.act = activity
   newLog.dur = minutes
 
-  addStore.saveNew(newLog)
+  saveNew(newLog)
   tagToAdd.value = undefined
 }
 
 const rest = (minutes: number) => commit('rest', minutes)
-
 function chaos(minutes = 25) {
   if (minutes > 25) tagToAdd.value = 'rabbit hole'
   commit('chaos', minutes)
@@ -39,8 +32,8 @@ function chaos(minutes = 25) {
 </script>
 
 <template>
-  <ThemeCard :is-padding="false">
-    <UButtonGroup size="xl" class="w-full flex-wrap lg:flex-nowrap">
+  <ThemeCard>
+    <UButtonGroup size="xl" class="w-full flex-wrap lg:flex-nowrap self-start">
       <UBadge>
         <small :class="styleUp">Short<wbr />cuts:</small>
       </UBadge>
@@ -78,7 +71,7 @@ function chaos(minutes = 25) {
         @click="commit('coding', 25)"
       />
 
-      <UBadge class="hidden lg:block content-center text-xs" :class="styleUp">
+      <UBadge class="hidden xl:block content-center text-xs" :class="styleUp">
         25 min. default
       </UBadge>
     </UButtonGroup>

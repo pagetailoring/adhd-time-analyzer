@@ -1,8 +1,8 @@
 {
-  "name": "nuxt-firebase",
+  "name": "firebase-analyzer",
   "type": "module",
   "author": "pagetailoring",
-  "description": "Firebase Layer — handles authentication and Firestore integration.",
+  "description": "Firebase Analyzer Layer — manages interactions between Firebase and the analyzer layers",
   "version": "0.0.1",
   "main": "./nuxt.config.ts",
   "scripts": {

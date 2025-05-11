@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { radius = 120, strokeWidth = 20 } = defineProps<{
+const { radius = 120, strokeWidth = 30 } = defineProps<{
   radius?: number | undefined
   strokeWidth?: number | undefined
 }>()
@@ -45,6 +45,9 @@ function polarToCartesian(angle: number) {
   const y = radius + radius * Math.sin(radians)
   return { x, y }
 }
+
+const emit = defineEmits<{ (event: 'isMounted'): void }>()
+onMounted(() => emit('isMounted'))
 </script>
 
 <template>
@@ -53,6 +56,7 @@ function polarToCartesian(angle: number) {
     :height="size"
     :viewBox="`0 0 ${size} ${size}`"
     style="overflow: visible; display: block; margin: auto"
+    class="w-full h-auto"
   >
     <path
       v-for="(segment, i) in segments"

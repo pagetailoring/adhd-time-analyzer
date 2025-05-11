@@ -54,7 +54,7 @@ const handleForm = async (): Promise<void> => {
   >
     <form
       v-if="!userUid"
-      style="display: grid; max-width: 16rem; gap: 1rem"
+      style="display: grid; max-width: 16rem; gap: 1rem; margin: auto"
       @submit.prevent="handleForm"
     >
       <UiAuthInput

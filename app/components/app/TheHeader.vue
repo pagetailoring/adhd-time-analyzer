@@ -10,7 +10,6 @@ const isDemo = ref(pub.IS_DEMO_PAGE)
   <ThemeCard
     :is-grid="true"
     :class="`md:grid-cols-5 md:grid-rows-none min-h-${height} sm:${height}`"
-    :is-padding="false"
   >
     <div class="md:col-span-2">
       <Transition>

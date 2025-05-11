@@ -1,9 +1,8 @@
 const useExternal = IS_EXTERNAL_DB ? () => useAnalyzerReadInDatabase() : null
-const useDbBuffer = IS_EXTERNAL_DB ? () => useDatabaseOperationsBufferStore() : null
 
-export const useAnalyzerFetchStore = defineStore('analyzerFetch', () => {
+export const useAnalyzerRead = () => {
   const { logs } = storeToRefs(useAnalyzerMemoryStore())
-  const { addMany: addManyToCacheBuffer } = useAnalyzerBufferStore()
+  const { addLogsToCacheWithDelay, upsertLogsInCache, removeLogFromCache } = useCacheBufferMethods()
 
   const message = '🔄 read:'
 
@@ -17,6 +16,8 @@ export const useAnalyzerFetchStore = defineStore('analyzerFetch', () => {
     return []
   }
 
+  // @todo read logic -- make ne composable
+
   async function fetchDayData(
     date: string,
     path: string = 'logs',
@@ -24,11 +25,18 @@ export const useAnalyzerFetchStore = defineStore('analyzerFetch', () => {
   ): Promise<TimeLog[]> {
     const cached = logs.value[date]
     if (cached) {
-      if (forceDbFetch && IS_EXTERNAL_DB && useDbBuffer) {
+      if (forceDbFetch && IS_EXTERNAL_DB) {
         setTimeout(async () => {
           // Force DB fetch after a delay to allow all memory operations to complete first
-          const { fromDb } = storeToRefs(useDbBuffer())
-          fromDb.value = await fetchDatabaseData(date, path)
+          const dataToCheck = await fetchDatabaseData(date, path)
+          if (dataToCheck.length) {
+            useAnalyzerBufferDayLogsFetchDbOps(
+              dataToCheck,
+              cached,
+              upsertLogsInCache,
+              removeLogFromCache
+            )
+          }
         }, 200)
       }
       console.log(message, cached.length)
@@ -36,9 +44,10 @@ export const useAnalyzerFetchStore = defineStore('analyzerFetch', () => {
     }
 
     const fresh = await fetchDatabaseData(date, path)
-    addManyToCacheBuffer(fresh, date)
+    // @todo @to check
+    addLogsToCacheWithDelay(fresh, date)
     return fresh
   }
 
   return { fetchDayData }
-})
+}

@@ -17,7 +17,11 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "up": "nuxi upgrade  --dotenv ../.env.demo",
-    "upgrade": "nuxi upgrade  --dotenv ../.env.demo"
+    "upgrade": "nuxi upgrade  --dotenv ../.env.demo",
+    "app": "nuxi generate --dotenv ../.env.app && scp -rp -P 41556 .output/public/. kvzbeoc@sshcloud.cluster024.hosting.ovh.net:~/_app",
+    "development": "nuxi generate --dotenv ../.env.development && scp -rp -P 41556 .output/public/. kvzbeoc@sshcloud.cluster024.hosting.ovh.net:~/_dev",
+    "demo": "nuxi generate --dotenv ../.env.demo && scp -rp -P 41556 .output/public/. kvzbeoc@sshcloud.cluster024.hosting.ovh.net:~/demo--adhd-analizer",
+    "stage": "nuxi generate --dotenv ../.env.stage && scp -rp -P 41556 .output/public/. kvzbeoc@sshcloud.cluster024.hosting.ovh.net:~/_stage"
   },
   "dependencies": {
     "@nuxt/ui": "^3.1.1",

@@ -35,4 +35,4 @@ function consoleCut(cutDown: boolean, idx: number) {
  * @returns       - The index of the matching TimeLog entry, or -1 if not found.
  */
 const getIndexById = (logs: TimeLog[], id: string | undefined): number =>
-  logs.findIndex((log) => log.id === id)
+  logs.findIndex((log: TimeLog) => log.id === id)

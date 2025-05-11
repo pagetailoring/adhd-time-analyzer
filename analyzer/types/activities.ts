@@ -1,8 +1,8 @@
 export interface MainActivityTag {
   key: string
   label: string
-  orderInSelect: number
-  groupInSelect: string
+  order: number
+  group: string
   color: string
   defaults: {
     tags: string[]

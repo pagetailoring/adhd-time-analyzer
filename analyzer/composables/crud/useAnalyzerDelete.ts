@@ -1,16 +1,18 @@
 const useExternal = IS_EXTERNAL_DB ? () => useAnalyzerDeleteInDatabase() : null
 
-export const useAnalyzerDeleteStore = defineStore('logsDelete', () => {
+export const useAnalyzerDelete = () => {
   const store = useAnalyzerViewStore()
+  const { removeLogFromCache } = useCacheBufferMethods()
   const { timeLogsToDisplay } = storeToRefs(store)
-  const buff = useAnalyzerBufferStore()
   const { displayDelete } = useNotifications()
 
-  function remove(id: string, info?: string) {
+  function remove(id: string | undefined, info?: string, isNotification = true) {
+    if (id === undefined) return
+
     // remove from UI and cache immediately
     timeLogsToDisplay.value = timeLogsToDisplay.value.filter((log) => log.id !== id)
-    buff.deleteFromToday(id)
-    displayDelete(`${info ?? id} removed`)
+    removeLogFromCache(id)
+    if (isNotification) displayDelete(`${info ?? id} removed`)
 
     if (IS_EXTERNAL_DB && useExternal) {
       const { removeInDb } = useExternal()
@@ -19,4 +21,4 @@ export const useAnalyzerDeleteStore = defineStore('logsDelete', () => {
   }
 
   return { remove }
-})
+}

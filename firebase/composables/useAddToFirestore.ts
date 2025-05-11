@@ -23,10 +23,10 @@ export function useAddFirestore() {
       newId.value = `${docRef.id}`
       success.value = true
     } catch (error) {
-      console.log('add', error as FirebaseError)
+      console.log('💾 add', error as FirebaseError)
       success.value = false
     } finally {
-      if (success.value) console.log('👾 firestore record added')
+      if (success.value) console.log('💾 firestore record created')
     }
   }
 

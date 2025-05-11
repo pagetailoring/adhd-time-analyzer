@@ -26,3 +26,5 @@ export const useAnalizerArchiveStatsStore = defineStore('archiveStats', () => {
 
   return { archiveDaysTableRows }
 })
+
+export type AnalizerArchiveStatsStore = ReturnType<typeof useAnalizerArchiveStatsStore>

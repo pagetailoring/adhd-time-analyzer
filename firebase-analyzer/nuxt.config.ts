@@ -6,7 +6,7 @@ console.log('  - Composables: Handle authentication and Firestore operations\n')
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  $meta: { name: 'firebase' },
-  imports: { dirs: ['stores/auth', 'composables/analyzer'] },
+  $meta: { name: 'firebase-analyzer' },
+  // imports: { dirs: ['stores/auth', 'composables/analyzer'] },
   devtools: { enabled: true },
 })

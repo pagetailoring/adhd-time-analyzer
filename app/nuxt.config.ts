@@ -33,11 +33,10 @@ console.log('\n\n💡', 'Main Application Entry Layer, built with Nuxt UI compon
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: [
-    process.env.USE_FIREBASE === 'true' ? '../firebase' : '../noop',
-    // @fixme @todo --- problem with pnpm cache
-    '../analyzer',
-  ],
+  extends:
+    process.env.USE_FIREBASE === 'true'
+      ? ['../firebase', '../firebase-analyzer', '../analyzer']
+      : ['../noop', '../analyzer'],
 
   modules: getModules(),
   ssr: false,
@@ -63,6 +62,9 @@ export default defineNuxtConfig({
       DOMAIN: process.env.DOMAIN,
       IS_DEMO_PAGE: process.env.DEMO === 'true', // to hide DEV buttons etc.
     },
+  },
+  alias: {
+    analyzer: resolve(__dirname, '../analyzer'),
   },
 
   compatibilityDate: '2024-11-01',

@@ -17,20 +17,12 @@ export function useEffectiveNightGapAutoDetect() {
     const dayStartLogIdx = findLongestGapIndex(logs, sleepThresholdHours)
     if (dayStartLogIdx === -1) return undefined
 
-    // @dev @todo to remove
-    if (isDev) consoleDetect(dayStartLogIdx, logs?.length)
-
     const cutoffLogId = logs[dayStartLogIdx].id
 
     return cutoffLogId
   }
 
   return { detectDayStart }
-}
-
-// @dev @todo to remove
-function consoleDetect(idx: number, logs: number) {
-  console.log('⭐️ Detect Day Start', '⭐️ index:', idx, 'logs:', logs)
 }
 
 /**

@@ -24,3 +24,12 @@ export function useAnalyzerDeleteInDatabase() {
   }
   return { removeInDb }
 }
+
+export const useAnalyzerBufferDayLogsFetchDbOps = async (
+  dataToCheck: TimeLog[],
+  cached: TimeLog[],
+  upsertLogsInCache: (newEntries: TimeLog[]) => void,
+  removeLogFromCache: (id?: string) => void
+) => {
+  console.log(dataToCheck, cached, upsertLogsInCache, removeLogFromCache)
+}
