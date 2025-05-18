@@ -1,0 +1,55 @@
+@charset "UTF-8";
+@import 'header';
+@import 'form';
+@import 'summary';
+@import 'table';
+
+body {
+  font-family: system-ui, sans-serif;
+  padding-inline: 0.5rem;
+  letter-spacing: 0.1em;
+  font-size: 78%;
+  max-width: 100vw;
+}
+
+.p-button,
+.p-toolbar,
+.p-datatable {
+  text-transform: uppercase;
+}
+
+:root {
+  --content: calc(100vw - 1rem);
+}
+
+#__app,
+#__app > * {
+  max-width: var(--content);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.w-full,
+#__app {
+  width: 100%;
+}
+
+.min {
+  text-transform: lowercase;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.p-card.center {
+  justify-content: center;
+}
+
+body,
+.p-tag-label {
+  font-weight: 400 !important;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}

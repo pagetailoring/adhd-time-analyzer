@@ -6,13 +6,16 @@
 .cache
 dist
 *public/LICENSES.txt
-app/public/LICENSES.txt
 
 # Node dependencies
 node_modules
 
-# config
-firebase/utils/config-firebase.ts
+# Nuxt layers are generated at build time based on project configuration in .env
+*tsconfig.json
+
+# config of firebase project
+utils/firebaseConfig.ts
+app/pnpm-lock.yaml
 
 # dev notes
 *__dev*

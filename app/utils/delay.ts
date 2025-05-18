@@ -1,1 +1,1 @@
-export const loadingDelay = 6000
+export const consoleLegalDelay = 6000

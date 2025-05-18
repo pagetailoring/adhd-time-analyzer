@@ -1,6 +1,5 @@
 export function useAnalyzerCreateInMemory() {
   function generateNewId(): string {
-    const { generateId } = useGenerateId()
     // @todo add check is ID is uniqu. Recurence
     return generateId()
   }

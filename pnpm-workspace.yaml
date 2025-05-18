@@ -1,6 +1,10 @@
 packages:
-  - app
   - analyzer
-  - firebase
+  - app
   - firebase-analyzer
-  - noop
+  - firebase
+  - firebase-noop
+  - theme-nuxt-ui
+  - theme-vuetify
+  - theme-prime-vue
+  - theme-noop

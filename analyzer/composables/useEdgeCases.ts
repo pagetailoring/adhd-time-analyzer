@@ -15,7 +15,6 @@ export function useEdgeCases(
   clearDisplayedData: () => void
 ) {
   const { detectDayStart } = useEffectiveNightGapAutoDetect()
-  const { getShiftedDateString } = useDateTime()
   const { now } = storeToRefs(useClockStore())
 
   function processFirstLogOfDayCycle(

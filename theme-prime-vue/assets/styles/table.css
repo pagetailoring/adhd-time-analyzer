@@ -1,0 +1,40 @@
+.p-tag {
+  margin: 0.3em;
+}
+
+.p-tag {
+  font-size: 1em;
+}
+
+.p-datatable-table-container {
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 🧱 Samo <table> ma min-width: 50rem, to OK */
+.p-datatable-scrollable-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.p-datatable-table {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.p-card:has(.p-datatable.main) {
+  margin-bottom: 2rem;
+}
+
+.p-card {
+  overflow-x: hidden;
+  max-width: var(--content);
+  box-sizing: border-box;
+}
+.p-card-content,
+.p-card-body {
+  overflow-x: hidden;
+  max-width: calc(100vw - 3rem);
+  box-sizing: border-box;
+}

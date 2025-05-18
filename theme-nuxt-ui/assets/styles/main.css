@@ -1,0 +1,12 @@
+@import 'tailwindcss' source('../../..');
+/* source('../../..') extend scope of scaning  filse to other Nuxt Layers */
+/* https://github.com/nuxt/ui/issues/3891 */
+/* https://ui.nuxt.com/getting-started/theme#source */
+
+@import '@nuxt/ui';
+
+@theme {
+  --breakpoint-sc2: 32rem;
+  --breakpoint-sc1: 56.6rem;
+}
+/* break points for shorcuts bar Skeleton: sc2 to 2 lines.. etc. */

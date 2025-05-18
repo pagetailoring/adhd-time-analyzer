@@ -5,12 +5,12 @@ const isDelay = ref(true)
 onMounted(() => {
   setTimeout(() => {
     isDelay.value = false
-  }, loadingDelay)
+  }, consoleLegalDelay)
 })
 </script>
 
 <template>
-  <div style="margin: 1rem">
+  <div>
     <AuthLoading v-if="!isAuthCheck" />
     <LazyAuthLoginForm v-else-if="!userUid" />
     <template v-if="userUid">

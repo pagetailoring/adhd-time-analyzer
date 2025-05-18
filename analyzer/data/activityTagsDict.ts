@@ -75,7 +75,6 @@ export const toTrackProjects: string[] = [
   'project x',
   'project y',
 ]
-
 export const toTrackLife: string[] = ['self care', 'sport', 'home stuff']
 
 export const timeManagement: string[] = [

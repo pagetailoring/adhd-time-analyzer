@@ -5,9 +5,13 @@ I looked for a similar free app, tried various Notion and Obsidian extensions, b
 
 > ⚠️ This is a **work-in-progress** version.
 
-The main purpose of this project is to practice using **Nuxt Layers**. Eventually, I’d like to experiment with **two independent UI frontends**, and possibly also try out **different cloud backends**. The first version is based on **Firebase**, using **Auth**, **Firestore**, and **Nuxt UI**.
+The main purpose of this project is to practice using **Nuxt Layers**.  
+Eventually, I’d like to experiment with **various UI libraries**, and possibly also try out **different cloud backends**.  
+The current version is based on **Firebase**, using **Auth**, **Firestore**, and includes **several layout options** to choose from.
 
-Alternatively, there's a demo version **without Firebase** — in that case, logs are stored in the browser’s **local storage**. You can download your logs in json file using the button in the UI. Logs are optimized, so I estimate that **5MB of local storage** should be enough to store a few months of data.
+Alternatively, there's a demo version **without Firebase** — in that case, logs are stored in the browser’s **local storage**.  
+You can download your logs as a `.json` file using the button in the UI.  
+Logs are optimized, so I estimate that **5MB of local storage** should be enough to store a few months of data.
 
 ## DEMO: [demo-adhd.pagetailoring.com](https://demo-adhd.pagetailoring.com/)
 
@@ -15,20 +19,26 @@ Alternatively, there's a demo version **without Firebase** — in that case, log
 
 This app will probably only make sense to someone with ADHD — someone who knows what it’s like to sit at a computer, completely forget about the world, food, or water, and stay there for hours.
 
-A well-known method that helps with this is the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). Unfortunately, when you have ADHD, you often either forget to start the timer or keep restarting it like hitting the snooze button on an alarm clock. You lose track of how long you've actually been working — or not working.
+A well-known method that helps with this is the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).  
+Unfortunately, when you have ADHD, you often either forget to start the timer or keep restarting it like hitting the snooze button on an alarm clock. You lose track of how long you've actually been working — or not working.
 
 _I built this app for myself to help with exactly that._
 
 ## Nuxt Layers
 
-- app: Application Entry Layer, built with Nuxt UI components
+- **ANALYZER**: `Main app logic layer` — all logic and calculations are handled in Pinia stores to keep logic UI-agnostic
+- app: Application Entry Layer for build
+- firebase-analyzer: Composables connecting the `analyzer` logic with Firebase, and `app.vue` used when Firebase is enabled
 - firebase: Firebase Layer, with:
   - Plugins: Initialization of Firebase app and authentication
   - Pinia Store: Manages authentication state
   - Components: Related to authentication UI and logic
   - Composables: Handle authentication and Firestore operations
-- noop: `Noop` fallback layer used when Firebase is disabled
-- **ANALYZER**: `Main app logic layer` — all logic and calculations are handled in Pinia stores to keep logic UI-agnostic
+- firebase-noop: `Noop` fallback layer used when Firebase is disabled, with `app.vue`
+- theme-nuxt-ui: Layer with demo page, the most refined and stable base theme
+- theme-vuetify: MVP (work in progress)
+- theme-prime-vue: MVP
+- theme-noop: `Noop` fallback theme
 
 ## Logic in a nutshell
 
@@ -41,21 +51,25 @@ _I built this app for myself to help with exactly that._
 
 _I'll write more about this here someday._
 
-> 🙃 The dictionaries used in the app are highly subjective and currently hardcoded in `~/analyzer/data`.
+> 🙃 The dictionaries used in the app are highly subjective and currently hardcoded in `~/analyzer/data/`.
 
 ![screenshot of app](app/assets/images/screenshot-1.webp)
 
 ## Settings
 
-`.env` variable to control which option is used:
+`.env` variables to control the app’s behavior:
 
 ```
-USE_FIREBASE=false
+UI_THEME=nuxtUi | primeVue | vuetify | noop
+USE_FIREBASE=false | true
+DEMO=true | false
 ```
 
-> ⚠️ If you're working on the version **without Firebase**, it's better to simply delete the contents of the `firebase` directory.
+You currently have **3 layouts** to choose from.  
+On each startup, it also tests the correctness of key settings in the `.env` file.
 
-> ⚠️ `[vue-tsc]` doesn't handle this setup well — or I haven’t figured out how to configure it properly yet.
+Each time the app starts, it _regenerates_ the `tsconfig.json` file based on `~/app/tsconfig.settings.json`, to which it automatically adds a generated array for the `exclude` field — based on settings from the appropriate `.env` file,  
+as well as values from `nuxt.config.ts` such as **aliases** and **extends** (Layers).
 
 ## Development (no-DB version)
 
@@ -64,7 +78,6 @@ or disable TypeScript strict mode in the `nuxt.config.ts` file of the `App Layer
 
 ```bash
 pnpm install
-cd app
 pnpm run dev
 ```
 
@@ -86,7 +99,6 @@ Then, proceed as usual with Nuxt:
 
 ```bash
 pnpm install
-cd app
 pnpm run dev
 ```
 
@@ -98,6 +110,8 @@ Start the development server on [http://localhost:3000](http://localhost:3000)
 - Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 - [Firebase Authentication](https://firebase.google.com/docs/auth) [web documentation](https://firebase.google.com/docs/auth/web/start)
 - [Nuxt UI](https://ui.nuxt.com/)
+- [PrimeVue](https://primevue.org/)
+- [Vuefity](https://vuetifyjs.com/en/)
 - Nuxt Ui using [TanStack Table](https://tanstack.com/table/latest/docs/framework/vue/vue-table#usevuetable) is widely used throughout the project
 - [@nuxt/eslint](https://eslint.nuxt.com/packages/module)
 - [typescript && vue-tsc](https://nuxt.com/docs/guide/concepts/typescript)

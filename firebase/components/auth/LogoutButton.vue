@@ -13,10 +13,5 @@ async function logout() {
 </script>
 
 <template>
-  <UButton
-    icon="material-symbols:account-circle-off-outline-rounded"
-    label="logout"
-    size="md"
-    @click="logout"
-  />
+  <UiButton label="logout" @click="logout" />
 </template>

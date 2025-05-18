@@ -1,0 +1,27 @@
+{
+  "name": "theme-vuetify",
+  "type": "module",
+  "author": "pagetailoring",
+  "description": "Vuetify Layer",
+  "private": false,
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "latest",
+    "eslint": "^9.25.1",
+    "nuxt": "^3.17.3",
+    "typescript": "^5.8.3",
+    "vite-plugin-vuetify": "^2.1.1",
+    "vue": "latest",
+    "vue-tsc": "^2.2.10",
+    "vuetify-nuxt-module": "^0.18.6"
+  }
+}

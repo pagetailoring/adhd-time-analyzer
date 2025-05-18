@@ -1,37 +1,29 @@
 export function useNotifications() {
-  const toast = useToast()
+  const { displayInUi } = useNuxtUiToast()
 
-  function consolIt(message: string) {
-    console.log(message)
+  function consoleIt(icon: string, messege: string) {
+    console.log(icon, messege)
   }
 
-  function display(title: string, duration = 2000) {
-    if (duration > 1) consolIt(title)
-    toast.add({
-      title: title,
-      icon: 'i-lucide-circle-check',
-      duration,
-    })
+  function display(messege: string, duration = 2000, color = 'info', icon = 'clock') {
+    displayInUi(messege, duration, color, icon)
+    consoleIt('💬', messege)
   }
 
-  function displayWarning(title: string, duration = 3000, color = 'warning' as NuxtUiColor) {
-    consolIt(title)
-
-    toast.add({
-      title,
-      color,
-      icon: 'i-lucide-trash',
-      duration,
-    })
+  function displayWarning(messege: string, duration = 3000, color = 'warning' as uiColors) {
+    displayInUi(messege, duration, color, 'melt')
+    consoleIt('👀', messege)
   }
 
-  function displayDelete(title: string, duration = 3000, color = 'warning' as NuxtUiColor) {
-    displayWarning(title, duration, color)
+  function displayDelete(messege: string, duration = 3000, color = 'warning' as uiColors) {
+    displayInUi(messege, duration, color, 'trash')
+    consoleIt('🗑️', messege)
   }
 
-  function displayError(title: string, duration = 9000, color = 'error' as NuxtUiColor) {
-    displayWarning(title, duration, color)
+  function displayError(messege: string, duration = 9000, color = 'error' as uiColors) {
+    displayInUi(messege, duration, color, 'error')
+    consoleIt('🔴 😱', messege)
   }
 
-  return { consolIt, display, displayDelete, displayError, displayWarning }
+  return { display, displayDelete, displayError, displayWarning }
 }

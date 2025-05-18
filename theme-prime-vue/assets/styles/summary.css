@@ -1,0 +1,12 @@
+.summary {
+  grid-auto-flow: column;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  /* outline: 1px dashed rgba(0, 255, 255, 0.5); */
+}
+
+.summary > .p-card:first-child {
+  thead {
+    display: none;
+  }
+}

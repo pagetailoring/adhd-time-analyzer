@@ -1,0 +1,30 @@
+{
+  "name": "theme-prime-vue",
+  "type": "module",
+  "author": "pagetailoring",
+  "description": "Noop theme Layer",
+  "private": false,
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "latest",
+    "@primevue/nuxt-module": "^4.3.4",
+    "eslint": "^9.25.1",
+    "nuxt": "^3.17.3",
+    "typescript": "^5.8.3",
+    "vue": "latest",
+    "vue-tsc": "^2.2.10"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^1.1.1",
+    "primevue": "^4.3.4"
+  }
+}

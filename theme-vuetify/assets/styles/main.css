@@ -1,0 +1,26 @@
+h1 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-inline: 1rem;
+
+  @media (width < 460px) {
+    display: none;
+  }
+}
+.up {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+button[type='submit'] {
+  font-size: 0.8rem;
+}
+
+.v-input--horizontal,
+.v-select {
+  grid-template-rows: 1fr 0px !important;
+}
+
+.v-card {
+  background: rgb(var(--v-theme-surface));
+}
