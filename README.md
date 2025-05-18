@@ -53,7 +53,7 @@ _I'll write more about this here someday._
 
 > 🙃 The dictionaries used in the app are highly subjective and currently hardcoded in `~/analyzer/data/`.
 
-![screenshot of app](app/assets/images/screenshot-1.webp)
+![screenshot of app](app/assets/images/screenshot-2.webp)
 
 ## Settings
 
