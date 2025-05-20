@@ -32,17 +32,6 @@ function rowItemsFor(row: TableRow<TimeLog>) {
   return getRowItems((log: TimeLog) => remove(log.id!, log.act!), display)(row as TableRow<TimeLog>)
 }
 
-// function copyTagsToForm(row: Row<unknown>) {
-//   const form = useAnalyzerFormStore()
-//   form.tags = row.getValue('tags')
-// }
-
-//  const gamesPlayed = computed(() => {
-//     return (team: Team): number => {
-//       return team.wins + team.draws + team.losses;
-//     };
-//   });
-
 function noteContent(row: TableRow<TimeLog>): string {
   return row.getValue('note') || ''
 }
@@ -82,32 +71,33 @@ onMounted(() => emit('isMounted'))
     </template>
 
     <template #tags-cell="{ row }">
-      <UBadge
-        v-if="row.original.qr === 0 || row.original.qr === 2"
-        size="sm"
-        :color="row.original.qr === 0 ? 'neutral' : 'success'"
-        class="my-1 mx-1"
-        :class="[styleUp]"
-        :label="row.original.qr === 0 ? '*Shallow' : '*Deep'"
-      />
-      <UBadge
-        v-for="(tag, idx) in row.original.tags"
-        :key="idx"
-        size="sm"
-        :color="getActTagColor(tag)"
-        class="my-1 mx-1"
-        :class="[styleUp]"
-        :label="tag"
-      />
-      <!-- @click="copyTagsToForm(row)" @todo with lazy loading -->
-      <UBadge
-        v-if="isNoteInTagsSection(row)"
-        size="sm"
-        color="secondary"
-        class="my-1 mx-1"
-        :class="[styleUp]"
-        :label="`*${noteContent(row)}`"
-      />
+      <LazyElementCopyTagsFromLog :tags="row.original.tags">
+        <UBadge
+          v-if="row.original.qr === 0 || row.original.qr === 2"
+          size="sm"
+          :color="row.original.qr === 0 ? 'neutral' : 'success'"
+          class="my-1 mx-1"
+          :class="[styleUp]"
+          :label="row.original.qr === 0 ? '*Shallow' : '*Deep'"
+        />
+        <UBadge
+          v-for="(tag, idx) in row.original.tags"
+          :key="idx"
+          size="sm"
+          :color="getActTagColor(tag)"
+          class="my-1 mx-1"
+          :class="[styleUp]"
+          :label="tag"
+        />
+        <UBadge
+          v-if="isNoteInTagsSection(row)"
+          size="sm"
+          color="secondary"
+          class="my-1 mx-1"
+          :class="[styleUp]"
+          :label="`*${noteContent(row)}`"
+        />
+      </LazyElementCopyTagsFromLog>
     </template>
 
     <template #note-cell="{ row }">
