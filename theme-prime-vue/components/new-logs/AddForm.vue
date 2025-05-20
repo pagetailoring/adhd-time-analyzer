@@ -77,7 +77,7 @@ const resetTime = () => resetArray(timeTags)
     <InputGroup>
       <Select
         v-model="activityModel"
-        :options="convertToSelectOptions(mainActivityTags.flat())"
+        :options="convertToSelectOptions(MAIN_ACTIVITY_TAGS_FLAT)"
         option-label="label"
         placeholder="Select Activity"
         input-id="activity"

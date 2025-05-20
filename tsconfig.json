@@ -1,0 +1,10 @@
+{
+  "extends": "./app/.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
+}

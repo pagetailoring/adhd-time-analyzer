@@ -1,4 +1,4 @@
-export type TimeLogType = string
+export type TimeLogTag = string
 
 export interface TimeLog {
   id?: string | undefined // now from firebase @todo handle it self
@@ -7,7 +7,7 @@ export interface TimeLog {
   date: string // log date YYYY-MM-DD
   dur: number // duration in minutes
   act: string // main activity tag
-  tags: TimeLogType[]
+  tags: TimeLogTag[]
   userId?: string // firebase auth uid
   note?: string
   qr?: number // quality time rate activity
@@ -15,6 +15,6 @@ export interface TimeLog {
 
 export interface TimeLogActivity {
   id: string
-  tags: TimeLogType[]
+  tags: TimeLogTag[]
   dur: number | undefined
 }

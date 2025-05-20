@@ -4,10 +4,10 @@ export const useAnalyzerSummaryStore = defineStore('summary', () => {
    */
 
   const summary = ref<SummaryItem[]>(
-    mainActivityTagsFlat.map((label, i) => ({
+    MAIN_ACTIVITY_TAGS_FLAT.map((label, i) => ({
       label,
       totalTime: 0,
-      color: mainActivityColors[i],
+      color: MAIN_ACTIVITY_COLORS[i],
     }))
   )
 

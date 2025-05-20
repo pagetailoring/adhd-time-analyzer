@@ -7,12 +7,6 @@
  *
  * @param length - The desired length of the ID. Defaults to 12.
  * @returns A randomly generated string of the given length.
- *
- * @example
- * ```ts
- * const id = generateId(); // "A8k3LmZ0qWn2"
- * const shortId = generateId(6); // "fK8pZ1"
- * ```
  */
 export function generateId(length: number = 12): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

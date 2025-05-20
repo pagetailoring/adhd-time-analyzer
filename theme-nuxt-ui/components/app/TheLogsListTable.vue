@@ -76,7 +76,7 @@ onMounted(() => emit('isMounted'))
     </template>
 
     <template #act-cell="{ row }">
-      <UBadge :class="styleUp" :color="getActColor(row.original.act) as NuxtUiColor">
+      <UBadge :class="styleUp" :color="getActTagColor(row.original.act) as NuxtUiColor">
         {{ row.original.act }}
       </UBadge>
     </template>
@@ -94,7 +94,7 @@ onMounted(() => emit('isMounted'))
         v-for="(tag, idx) in row.original.tags"
         :key="idx"
         size="sm"
-        :color="getActColor(tag)"
+        :color="getActTagColor(tag)"
         class="my-1 mx-1"
         :class="[styleUp]"
         :label="tag"

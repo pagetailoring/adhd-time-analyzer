@@ -3,12 +3,7 @@
 const { data } = storeToRefs(useAnalyzerSummaryStore())
 
 // Reactive record of sums by group
-const groupSums = ref<Record<string, number>>({
-  success: 0,
-  info: 0,
-  warning: 0,
-  inverted: 0,
-})
+const groupSums = ref(getGroupsWithZeroSum())
 
 // Internal previous state for incremental updates
 let previousData: SummaryItem[] = []
@@ -72,15 +67,39 @@ const groupedArray = computed(() => {
 
 const emit = defineEmits<{ (event: 'isMounted'): void }>()
 onMounted(() => emit('isMounted'))
+
+const bckgColor = computed(() => {
+  return (group: string): string => {
+    return group === 'neutral' ? 'inverted' : group
+  }
+})
 </script>
 
 <template>
-  <div class="absolute z-20 flex h-full w-10 flex-col bg-default px-2 py-1 opacity-60">
+  <div>
     <div
-      v-for="item in groupedArray"
-      :key="item.group"
-      :class="{ ['bg-' + item.group]: true, 'my-1 rounded-sm': true }"
-      :style="{ height: item.percent + '%' }"
-    />
+      v-for="{ group, totalTime, percent } in groupedArray"
+      :key="group"
+      :class="{
+        ['ring-' + group]: true,
+        'relative grid ring ring-inset my-1 rounded-md': true,
+        'items-center justify-items-center overflow-hidden': true,
+      }"
+      :style="{ height: percent + '%' }"
+    >
+      <div
+        :class="{ ['bg-' + bckgColor(group)]: true }"
+        class="absolute size-full opacity-50"
+      ></div>
+      <div
+        v-if="percent > 10"
+        :class="{ ['text-' + group]: true }"
+        class="absolute whitespace-nowrap -rotate-90 text-xs"
+      >
+        {{ percent < 21 ? totalTime + ' m.' : formatTime(totalTime) }}
+      </div>
+    </div>
   </div>
 </template>
+<!-- helper WIP -->
+<!-- <div style="color: white" title="@todo remove it">{{ percent }} %</div> -->

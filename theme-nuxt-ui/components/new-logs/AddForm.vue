@@ -40,7 +40,7 @@ onMounted(() => emit('isMounted'))
           icon="hugeicons:magic-wand-02"
           class="col-span-2 xl:col-span-2 capitalize"
           highlight
-          :items="mainActivityTags"
+          :items="MAIN_ACTIVITY_TAGS"
         />
       </UTooltip>
 

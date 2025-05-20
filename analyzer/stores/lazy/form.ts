@@ -10,13 +10,13 @@
 export const useAnalyzerFormStore = defineStore('form', () => {
   const activity = ref<string>('')
   const durationMinutes = ref<number>(25)
-  const tags = ref<TimeLogType[]>([])
+  const tags = ref<TimeLogTag[]>([])
   const qualityRate = ref<number>(1)
   const note = ref<string>('')
 
   // additional helpers selects
-  const timeTags = ref<TimeLogType[]>([])
-  const trackTags = useLocalStorage<TimeLogType[]>('toTrack', [], {
+  const timeTags = ref<TimeLogTag[]>([])
+  const trackTags = useLocalStorage<TimeLogTag[]>('toTrack', [], {
     initOnMounted: true,
   })
 
@@ -79,7 +79,7 @@ export const useAnalyzerFormStore = defineStore('form', () => {
   }
 
   function init() {
-    activity.value = mainActivityTags[0][0]
+    activity.value = MAIN_ACTIVITY_TAGS[0][0]
     const def = getMainActivityDefaults(activity.value)
     tags.value = def.tags
     durationMinutes.value = def.duration

@@ -22,7 +22,6 @@ const pageCount = computed(() => {
 
 const headers: DataTableHeader = [
   { title: 'PMDRO', key: 'sort', align: 'center' },
-  // { title: 'POMODORO', key: 'dur', align: 'center' },
   { title: 'MAIN', key: 'act', align: 'center' },
   { title: 'TAGS', key: 'list' },
 ]
@@ -44,14 +43,23 @@ onMounted(() => emit('isMounted'))
                   <span class="text-lowercase"> min.</span>
                 </td>
                 <td>
-                  <v-chip size="small">{{ item.act }}</v-chip>
+                  <v-chip variant="tonal" :color="getActTagColor(item.act)" size="small">
+                    {{ item.act }}
+                  </v-chip>
                 </td>
                 <td>
-                  <v-chip-group column>
-                    <v-chip v-for="(tag, idx) in item.tags" :key="idx" size="x-small">
+                  <div class="d-flex ga-1">
+                    <v-chip
+                      v-for="(tag, idx) in item.tags"
+                      :key="idx"
+                      :color="getActTagColor(tag)"
+                      variant="tonal"
+                      size="x-small"
+                      class="m-1"
+                    >
                       {{ tag }}
                     </v-chip>
-                  </v-chip-group>
+                  </div>
                 </td>
               </tr>
             </template>
@@ -66,11 +74,3 @@ onMounted(() => emit('isMounted'))
     </v-col>
   </v-row>
 </template>
-
-<!-- row table for tests -->
-<!-- <v-row>
-    <v-col cols="12"> </v-col>
-    <v-card-text>
-      <v-data-table class="text-caption" :items="timeLogsToDisplay" />
-    </v-card-text>
-  </v-row> -->

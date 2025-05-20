@@ -1,6 +1,6 @@
 {
   "name": "adhd-analyzer",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "pagetailoring",
   "description": "Anti-drift away ADHD Pomodoro time tracker.",
   "private": false,

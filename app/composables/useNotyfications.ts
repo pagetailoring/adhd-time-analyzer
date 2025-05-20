@@ -10,17 +10,17 @@ export function useNotifications() {
     consoleIt('💬', messege)
   }
 
-  function displayWarning(messege: string, duration = 3000, color = 'warning' as uiColors) {
+  function displayWarning(messege: string, duration = 3000, color = 'warning' as UiColors) {
     displayInUi(messege, duration, color, 'melt')
     consoleIt('👀', messege)
   }
 
-  function displayDelete(messege: string, duration = 3000, color = 'warning' as uiColors) {
+  function displayDelete(messege: string, duration = 3000, color = 'warning' as UiColors) {
     displayInUi(messege, duration, color, 'trash')
     consoleIt('🗑️', messege)
   }
 
-  function displayError(messege: string, duration = 9000, color = 'error' as uiColors) {
+  function displayError(messege: string, duration = 9000, color = 'error' as UiColors) {
     displayInUi(messege, duration, color, 'error')
     consoleIt('🔴 😱', messege)
   }

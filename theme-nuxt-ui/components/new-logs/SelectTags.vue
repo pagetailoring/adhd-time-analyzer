@@ -12,10 +12,10 @@ type ItemWithChip = {
 }
 
 function convertToSelectOptions(items: string[]): ItemWithChip[] {
-  return items.map((tag: TimeLogType) => ({
+  return items.map((tag: TimeLogTag) => ({
     label: tag,
     value: tag,
-    chip: { color: getActColor(tag) as NuxtUiColor },
+    chip: { color: getActTagColor(tag) as NuxtUiColor },
   }))
 }
 

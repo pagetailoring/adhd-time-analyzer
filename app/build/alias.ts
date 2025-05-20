@@ -1,6 +1,6 @@
 import { resolve } from 'node:path'
-import { toSnakeCase } from '../utils/snake-case'
 import { layerDirNamesForAliases } from '../config.layers'
+import { toSnakeCase } from '../utils/snake-case'
 import { getActiveThemeLayerAlias } from './theme'
 
 /**

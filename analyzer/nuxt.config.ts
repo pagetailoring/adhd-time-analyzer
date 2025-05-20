@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       'types',
       'utils',
       'utils/config',
+      'utils/colors',
       'utils/time-log',
       'utils/time-logs',
     ],

@@ -6,5 +6,8 @@
  * @returns A formatted string like "1 h 5 min."
  */
 export function formatTime(minutes: number): string {
-  return `${Math.floor(minutes / 60)} h ${minutes % 60} min.`
+  const min = minutes % 60
+  const hours = Math.floor(minutes / 60)
+
+  return min === 0 ? `${hours} h` : hours === 0 ? `${min} min.` : `${hours} h ${min} min.`
 }

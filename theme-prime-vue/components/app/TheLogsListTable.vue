@@ -27,6 +27,23 @@ const isNoteInTagsSection = (row: TableRow<TimeLog>): boolean =>
 
 const emit = defineEmits<{ (event: 'isMounted'): void }>()
 onMounted(() => emit('isMounted'))
+
+const colorMap: Record<string, string> = {
+  secondary: 'help',
+  error: 'danger',
+  warning: 'warn',
+  neutral: 'primary',
+  primary: 'success',
+}
+
+// Mapping general UiColors to color names used by PrimeVue
+const tagColor = computed(() => {
+  return (tag: UiColors): string => {
+    const colorSlug = getActTagColor(tag)
+    const mapped = colorMap[colorSlug]
+    return mapped ? mapped : colorSlug
+  }
+})
 </script>
 
 <template>
@@ -62,7 +79,7 @@ onMounted(() => emit('isMounted'))
 
         <Column field="act" header="Main">
           <template #body="{ data: rawData }">
-            <Tag :value="rawData.act" :severity="getActColor(rawData.act)" />
+            <Tag :value="rawData.act" :severity="tagColor(rawData.act)" />
           </template>
         </Column>
 
@@ -72,7 +89,7 @@ onMounted(() => emit('isMounted'))
               v-for="(tag, idx) in slotProps.data.tags"
               :key="idx"
               :value="tag"
-              :severity="getActColor(tag)"
+              :severity="tagColor(tag)"
             />
             <Tag
               v-if="isNoteInTagsSection(slotProps)"

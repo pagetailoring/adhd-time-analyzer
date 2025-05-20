@@ -1,22 +1,25 @@
 {
   "name": "adhd-time-analyzer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "pagetailoring",
   "description": "Anti-drift away ADHD Pomodoro time tracker.",
   "private": true,
   "main": "index.js",
   "scripts": {
+    "app": "pnpm -C app app",
     "clean": "pnpm -C app run clean",
     "demo": "pnpm -C app run demo",
     "dev": "pnpm -C app run dev",
+    "development": "pnpm -C app run development",
     "host": "pnpm -C app run host",
     "lint": "pnpm -C app run lint",
     "lint:fix": "pnpm -C app run lint:fix",
+    "stage": "pnpm -C app run stage",
     "typecheck": "pnpm -C app run typecheck",
     "up": "npx nuxi upgrade app"
   },
   "keywords": [
-    "Nuxt"
+    "Nuxt, Nuxt UI, PrimeVue, Vuefity"
   ],
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",

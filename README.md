@@ -78,6 +78,7 @@ or disable TypeScript strict mode in the `nuxt.config.ts` file of the `App Layer
 
 ```bash
 pnpm install
+cd app
 pnpm run dev
 ```
 
@@ -99,6 +100,7 @@ Then, proceed as usual with Nuxt:
 
 ```bash
 pnpm install
+cd app
 pnpm run dev
 ```
 

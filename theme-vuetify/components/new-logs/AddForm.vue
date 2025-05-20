@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { mainActivityTagsFlat } from 'ANALYZER_LAYER/utils/main-activity-tags'
-import { durations } from 'ANALYZER_LAYER/data/durations'
-import { qltyRateSetlect } from 'ANALYZER_LAYER/data/qualityRate'
-
 const { useAnalyzerFormStore } = await import('ANALYZER_LAYER/stores/lazy/form')
 const form = useAnalyzerFormStore()
 const { activity, durationMinutes, tags, timeTags, trackTags, qualityRate, note } =
@@ -28,7 +24,7 @@ const emit = defineEmits<{ (event: 'isMounted'): void }>()
 onMounted(() => emit('isMounted'))
 
 onMounted(() => {
-  console.log('mainActivityTagsFlat', mainActivityTagsFlat)
+  console.log('MAIN_ACTIVITY_TAGS_FLAT', MAIN_ACTIVITY_TAGS_FLAT)
 })
 </script>
 
@@ -36,13 +32,12 @@ onMounted(() => {
   <form @submit.prevent="handleSubmit">
     <v-row class="d-flex">
       <v-col cols="12" sm="4">
-        <!-- <UiTooltip text="Main ativity type"> -->
         <UiSelect
           v-model="activity"
           icon="hugeicons:magic-wand-02"
           class="up"
           highlight
-          :items="mainActivityTagsFlat"
+          :items="MAIN_ACTIVITY_TAGS_FLAT"
         />
       </v-col>
 
@@ -57,9 +52,7 @@ onMounted(() => {
       </v-col>
 
       <v-col cols="6" sm="2">
-        <!-- <UiTooltip text="Time in minutes"> -->
         <UiSelect v-model="durationMinutes" :items="durations" />
-        <!-- </UiTooltip> -->
       </v-col>
 
       <v-col cols="6" sm="4">
@@ -67,7 +60,6 @@ onMounted(() => {
       </v-col>
 
       <v-col cols="6" sm="3">
-        <!-- <UiTooltip text="Quality Ratings activity" > -->
         <UiSelect
           v-model="qualityRate"
           value-key="val"
@@ -75,7 +67,6 @@ onMounted(() => {
           item-value="value"
           item-title="label"
         />
-        <!-- </UiTooltip> -->
       </v-col>
 
       <v-col cols="12" sm="9">
@@ -89,9 +80,7 @@ onMounted(() => {
       </v-col>
 
       <v-col cols="12" sm="4">
-        <!-- <UiTooltip text="Quality time ratings"> -->
         <UiCombobox v-model="timeTags" :items="timeTagsSelect" />
-        <!-- </UiTooltip> -->
       </v-col>
     </v-row>
   </form>

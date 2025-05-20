@@ -1,4 +1,4 @@
-export const mainActivityConfig: MainActivityTag[] = [
+export const MAIN_ACTIVITY_CONFIG: MainActivityTag[] = [
   {
     key: 'coding',
     label: 'Coding',

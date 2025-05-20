@@ -1,13 +1,7 @@
+import { getActTagColor } from '../../utils/colors/get-act-tag-color'
+
 /**
  * Provides utility methods to update reactive group sum totals based on label mappings.
- *
- * This composable exposes three focused methods for manipulating a reactive `groupSums` object:
- * - Full recalculation of group totals from an array of items.
- * - Incremental update when an item's totalTime changes.
- * - Addition of a new item to the corresponding group total.
- *
- * Intended for use in data visualizations or summary components that need to track and update
- * categorized time totals reactively.
  *
  * @param {Ref<Record<string, number>>} groupSums - A reactive object that stores numeric totals per group
  * @returns {Object} Methods for recalculating, updating, and adding to group sums
@@ -16,10 +10,16 @@
 
 export function useGroupSumsChartMethods(groupSums: Ref<Record<string, number>>) {
   /**
+   * Recalculations utility
+   */
+  function groupSumsUpdate(label: string, value: number) {
+    groupSums.value[getActTagColor(label)] += value
+  }
+
+  /**
    * Recalculates all group totals from scratch using current items.
    * @function recalculateAllGroupTotals
    * @param {SummaryItem[]} newItems - Array of items to compute sums from
-   * @keywords full-recalculation, reset, total sums
    */
   function recalculateAllGroupTotals(newItems: SummaryItem[]) {
     // Reset all sums
@@ -28,8 +28,7 @@ export function useGroupSumsChartMethods(groupSums: Ref<Record<string, number>>)
     })
     // Accumulate totals
     newItems.forEach((item) => {
-      const group = LABEL_TO_GROUP[item.label] || 'inverted'
-      groupSums.value[group] += item.totalTime
+      groupSumsUpdate(item.label, item.totalTime)
     })
   }
 
@@ -39,11 +38,9 @@ export function useGroupSumsChartMethods(groupSums: Ref<Record<string, number>>)
    * @param {string} label - Label identifying the group mapping
    * @param {number} oldVal - Previous totalTime value
    * @param {number} newVal - New totalTime value
-   * @keywords incremental-update, delta, performance
    */
   function applyLabelDeltaToGroupSum(label: string, oldVal: number, newVal: number) {
-    const group = LABEL_TO_GROUP[label] || 'inverted'
-    groupSums.value[group] += newVal - oldVal
+    groupSumsUpdate(label, newVal - oldVal)
   }
 
   /**
@@ -51,12 +48,8 @@ export function useGroupSumsChartMethods(groupSums: Ref<Record<string, number>>)
    * @function addNewLabelToGroupSum
    * @param {string} label - Label identifying the group mapping
    * @param {number} val - Value to add for the new item
-   * @keywords addition, new-item, incremental-update
    */
-  function addNewLabelToGroupSum(label: string, val: number) {
-    const group = LABEL_TO_GROUP[label] || 'inverted'
-    groupSums.value[group] += val
-  }
+  const addNewLabelToGroupSum = (label: string, val: number) => groupSumsUpdate(label, val)
 
   return { addNewLabelToGroupSum, applyLabelDeltaToGroupSum, recalculateAllGroupTotals }
 }
