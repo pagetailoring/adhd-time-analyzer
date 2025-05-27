@@ -1,11 +1,15 @@
 <script setup lang="ts">
+const { disabled = false } = defineProps<{
+  disabled?: boolean
+}>()
+
 const { useAnalyzerFormStore } = await import('ANALYZER_LAYER/stores/lazy/form')
 const form = useAnalyzerFormStore()
 const { activity, durationMinutes, tags, timeTags, trackTags, qualityRate, note } =
   storeToRefs(form)
 
 const trackTagsSelect = [toTrackProjects, toTrackWork, toTrackLife]
-const timeTagsSelect = [timeManagement, quality]
+const timeTagsSelect = [timeManagement, quality, notesHelper]
 
 // Submission logic
 const addStore = useAnalyzerCreate()
@@ -38,9 +42,10 @@ onMounted(() => emit('isMounted'))
         <UiSelect
           v-model="activity"
           icon="hugeicons:magic-wand-02"
-          class="col-span-2 xl:col-span-2 capitalize"
+          class="col-span-2 capitalize xl:col-span-2"
           highlight
           :items="MAIN_ACTIVITY_TAGS"
+          :disabled
         />
       </UTooltip>
 
@@ -51,6 +56,7 @@ onMounted(() => emit('isMounted'))
           highlight
           icon="i-lucide-clock"
           :items="durations"
+          :disabled
         />
       </UTooltip>
 
@@ -58,14 +64,16 @@ onMounted(() => emit('isMounted'))
         trailing-icon="hugeicons:floppy-disk"
         type="submit"
         color="primary"
-        class="justify-center uppercase text-sm rounded-xl px-4"
+        class="justify-center rounded-xl px-4 text-sm uppercase"
         label="Save new"
+        :disabled
       />
 
       <UInput
         v-model="note"
         class="col-span-2 sm:col-span-1 lg:col-span-2"
         placeholder="info note..."
+        :disabled
       />
 
       <UTooltip text="Quality Ratings activity" :content>
@@ -75,6 +83,7 @@ onMounted(() => emit('isMounted'))
           class="col-span-1 lg:col-span-2"
           value-key="val"
           :items="qltyRateSetlect"
+          :disabled
         />
       </UTooltip>
 
@@ -87,14 +96,15 @@ onMounted(() => emit('isMounted'))
             class="w-[calc(100%-2.5rem)]"
             multiple
             :items="timeTagsSelect"
+            :disabled
           />
         </UTooltip>
         <UTooltip text="Reset field" :content>
-          <UButton class="w-[2.5rem]" icon="arcticons:cleaner" @click="resetTime()" />
+          <UButton class="w-[2.5rem]" icon="arcticons:cleaner" :disabled @click="resetTime()" />
         </UTooltip>
       </UButtonGroup>
 
-      <LazyNewLogsSelectTags class="col-span-2 lg:col-span-3 xl:col-span-6" />
+      <LazyNewLogsSelectTags :disabled class="col-span-2 lg:col-span-3 xl:col-span-6" />
 
       <UButtonGroup class="col-span-2 lg:col-span-3 xl:col-span-4">
         <UTooltip
@@ -108,10 +118,16 @@ onMounted(() => emit('isMounted'))
             class="w-[calc(100%-2.5rem)]"
             multiple
             :items="trackTagsSelect"
+            :disabled
           />
         </UTooltip>
         <UTooltip text="Reset field" :content>
-          <UButton class="w-[2.5rem]" icon="arcticons:cleaner" @click="() => resetTrack()" />
+          <UButton
+            class="w-[2.5rem]"
+            icon="arcticons:cleaner"
+            :disabled
+            @click="() => resetTrack()"
+          />
         </UTooltip>
       </UButtonGroup>
     </form>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 const { timeLogsToDisplay, isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
 
-const data = ref<TimeLog[]>([])
+// @todo change timeLogsToDisplay to arrayToDisplay: data, remove data logic (watch)
 
+const data = ref<TimeLog[]>([])
 watch(
   timeLogsToDisplay,
   async () => {

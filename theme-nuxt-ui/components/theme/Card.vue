@@ -6,7 +6,7 @@ const { isBorder = true, isGrid = false } = defineProps<{
 
 const talwindClass = ref([
   isGrid ? 'grid' : 'flex',
-  isBorder ? styleBorder : '',
+  isBorder ? 'border' : '',
   'divide-y divide-(--ui-border)',
   'items-center gap-2',
   'overflow-hidden',

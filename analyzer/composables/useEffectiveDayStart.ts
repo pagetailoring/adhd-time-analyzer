@@ -11,17 +11,19 @@
  */
 
 export function useEffectiveDayStart(
-  entries: TimeLog[],
+  entries: Ref<TimeLog[]>,
   gapThresholdMinutes = STATISTICS_EFFECTIVE_DAY_START_GAP_MINUTES
 ): ComputedRef<Date | null> {
   return computed(() => {
-    if (!entries.length) return null
+    if (!entries.value.length) return null
 
     const thresholdMs = gapThresholdMinutes * 60_000
     // Collect sequential entries within threshold gaps
-    const eligible = collectSequentialEntries(entries, thresholdMs)
+    const eligible = collectSequentialEntries(entries.value, thresholdMs)
+
     // Sum their durations (in minutes)
     const totalMinutes = eligible.reduce((sum, log) => sum + log.dur, 0)
+
     // Compute start: last eligible log date minus total duration
     const lastTimestamp = getLogDate(eligible[eligible.length - 1]).getTime()
     return new Date(lastTimestamp - totalMinutes * 60_000)

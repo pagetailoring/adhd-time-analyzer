@@ -2,8 +2,8 @@
 const { isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
 
 // Lazy live stats store (today)
-const { useAnalizerLiveStatsStore } = await import('ANALYZER_LAYER/stores/lazy/live')
-const todayStatsStore = useAnalizerLiveStatsStore()
+const { useAnalyzerLiveStatsStore } = await import('ANALYZER_LAYER/stores/lazy/live')
+const todayStatsStore = useAnalyzerLiveStatsStore()
 const { todayTableRows } = storeToRefs(todayStatsStore)
 
 // Lazy archive store
@@ -17,8 +17,8 @@ watch(
   isTodayDataDisplayed,
   async (isToday) => {
     if (!isToday && !archiveStore.value) {
-      const { useAnalizerArchiveStatsStore } = await import('ANALYZER_LAYER/stores/dynamic/archive')
-      archiveStore.value = useAnalizerArchiveStatsStore()
+      const { useAnalyzerArchiveStatsStore } = await import('ANALYZER_LAYER/stores/dynamic/archive')
+      archiveStore.value = useAnalyzerArchiveStatsStore()
     }
   },
   { immediate: true }

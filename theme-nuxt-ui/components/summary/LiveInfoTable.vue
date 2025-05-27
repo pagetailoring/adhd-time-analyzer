@@ -6,25 +6,25 @@ import type { AnalizerArchiveStatsStore } from 'ANALYZER_LAYER/stores/dynamic/ar
 const { isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
 
 // Lazy loaded store
-const { useAnalizerLiveStatsStore } = await import('ANALYZER_LAYER/stores/lazy/live')
-const todayStatsStore = useAnalizerLiveStatsStore()
+const { useAnalyzerLiveStatsStore } = await import('ANALYZER_LAYER/stores/lazy/live')
+const todayStatsStore = useAnalyzerLiveStatsStore()
 const { todayTableRows } = storeToRefs(todayStatsStore)
 
 // Store instance will be loaded only when needed
 const archiveStore = ref<AnalizerArchiveStatsStore | null>(null)
 
 // Reactive computed fallback to an empty array when store is not yet available
-const archiveDaysTableRows = computed(() =>
-  archiveStore.value ? storeToRefs(archiveStore.value).archiveDaysTableRows.value : []
-)
+const archiveDaysTableRows = computed(() => {
+  return archiveStore.value ? storeToRefs(archiveStore.value).archiveDaysTableRows.value : []
+})
 
 // Watcher triggers lazy loading of the archive store only when archive data is needed
 watch(
   isTodayDataDisplayed,
   async (isToday) => {
     if (!isToday && !archiveStore.value) {
-      const { useAnalizerArchiveStatsStore } = await import('ANALYZER_LAYER/stores/dynamic/archive')
-      archiveStore.value = useAnalizerArchiveStatsStore()
+      const { useAnalyzerArchiveStatsStore } = await import('ANALYZER_LAYER/stores/dynamic/archive')
+      archiveStore.value = useAnalyzerArchiveStatsStore()
     }
   },
   { immediate: true }
@@ -41,6 +41,6 @@ onMounted(() => emit('isMounted'))
   <UTable
     :data="isTodayDataDisplayed ? todayTableRows : archiveDaysTableRows"
     :columns="columns"
-    class="min-w-42"
+    class="bg-default min-w-42"
   />
 </template>

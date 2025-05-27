@@ -17,12 +17,14 @@ export const useAnalyzerRead = () => {
   }
 
   // @todo read logic -- make ne composable
+  const { start, done } = useProcessingState()
 
   async function fetchDayData(
     date: string,
     path: string = 'logs',
     forceDbFetch = false
   ): Promise<TimeLog[]> {
+    start('fetch')
     const cached = logs.value[date]
     if (cached) {
       if (forceDbFetch && IS_EXTERNAL_DB) {
@@ -40,12 +42,14 @@ export const useAnalyzerRead = () => {
         }, 200)
       }
       console.log(message, cached.length)
+      done('fetch')
       return cached
     }
 
     const fresh = await fetchDatabaseData(date, path)
     // @todo @to check
     addLogsToCacheWithDelay(fresh, date)
+    done('fetch')
     return fresh
   }
 

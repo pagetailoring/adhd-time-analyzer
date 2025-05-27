@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const { timeLogsToDisplay } = storeToRefs(useAnalyzerViewStore())
 
-// // @test: experimental approach for delaying table rendering
-// // @idea: maybe move pushLogic here to have faster count of statystics
-// //        what would be more consistent and UI-agnostic
+// @todo change timeLogsToDisplay to arrayToDisplay: data, remove data logic (watch)
+
 const data = ref<TimeLog[]>([])
 watch(
   timeLogsToDisplay,

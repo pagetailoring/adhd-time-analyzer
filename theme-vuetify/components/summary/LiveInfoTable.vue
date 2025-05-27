@@ -6,8 +6,8 @@ import type { AnalizerArchiveStatsStore } from 'ANALYZER_LAYER/stores/dynamic/ar
 const { isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
 
 // // Lazy loaded store
-const { useAnalizerLiveStatsStore } = await import('ANALYZER_LAYER/stores/lazy/live')
-const todayStatsStore = useAnalizerLiveStatsStore()
+const { useAnalyzerLiveStatsStore } = await import('ANALYZER_LAYER/stores/lazy/live')
+const todayStatsStore = useAnalyzerLiveStatsStore()
 const { todayTableRows } = storeToRefs(todayStatsStore)
 
 // Store instance will be loaded only when needed
@@ -23,8 +23,8 @@ watch(
   isTodayDataDisplayed,
   async (isToday) => {
     if (!isToday && !archiveStore.value) {
-      const { useAnalizerArchiveStatsStore } = await import('ANALYZER_LAYER/stores/dynamic/archive')
-      archiveStore.value = useAnalizerArchiveStatsStore()
+      const { useAnalyzerArchiveStatsStore } = await import('ANALYZER_LAYER/stores/dynamic/archive')
+      archiveStore.value = useAnalyzerArchiveStatsStore()
     }
   },
   { immediate: true }
@@ -51,7 +51,7 @@ onMounted(() => emit('isMounted'))
       <template #item="{ item }">
         <tr>
           <td class="text-center">{{ item.label }}</td>
-          <td class="text-center text-no-wrap">{{ item.data }}</td>
+          <td class="text-no-wrap text-center">{{ item.data }}</td>
         </tr>
       </template>
     </v-data-table>

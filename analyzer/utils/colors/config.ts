@@ -17,5 +17,5 @@ export const TAGS_FALLBACK_COLOR = 'neutral' as UiColors
  */
 export const info = ['test', 'work', ...toTrackWork, ...toTrackProjects]
 export const success = ['eat', 'self care', 'growth']
-export const warning = ['rabbit hole', 'drift away']
-export const error = ['get stuck']
+export const warning = ['rabbit hole', 'drift away', 'put out fires']
+export const error = ['get stuck', 'digression']

@@ -4,12 +4,25 @@ const { radius = 120, strokeWidth = 30 } = defineProps<{
   strokeWidth?: number | undefined
 }>()
 
+type ChartData = {
+  label: string
+  value: number
+  path: string
+  color?: string
+}
+
 const { data, totalTrackedMinutes, totalTrackedTime } = storeToRefs(useAnalyzerSummaryStore())
 
+function polarToCartesian(angle: number) {
+  const radians = (angle - 90) * (Math.PI / 180.0)
+  const x = radius + radius * Math.cos(radians)
+  const y = radius + radius * Math.sin(radians)
+  return { x, y }
+}
 const size = computed(() => radius * 2)
 const center = computed(() => radius)
 
-const segments = computed(() => {
+const segments = computed<ChartData[]>(() => {
   let startAngle = 0
 
   return data.value.map((item) => {
@@ -21,30 +34,20 @@ const segments = computed(() => {
     const end = polarToCartesian(endAngle)
 
     const { color, label } = item
-
     const path = [
       `M ${start.x} ${start.y}`,
       `A ${radius} ${radius} 0 ${largeArc} 1 ${end.x} ${end.y}`,
     ].join(' ')
 
-    const result = {
-      label,
-      value,
-      path,
-      color,
-    }
-
+    const result = { label, value, path, color }
     startAngle = endAngle
+
     return result
   })
 })
 
-function polarToCartesian(angle: number) {
-  const radians = (angle - 90) * (Math.PI / 180.0)
-  const x = radius + radius * Math.cos(radians)
-  const y = radius + radius * Math.sin(radians)
-  return { x, y }
-}
+const { ping } = useProcessingState()
+watch(segments, () => ping('doughnut'))
 
 const emit = defineEmits<{ (event: 'isMounted'): void }>()
 onMounted(() => emit('isMounted'))
@@ -62,6 +65,7 @@ onMounted(() => emit('isMounted'))
       width: 100%;
       height: auto;
       max-height: 80%;
+      aspect-ratio: 1;
     "
   >
     <path
@@ -74,7 +78,6 @@ onMounted(() => emit('isMounted'))
       stroke-linecap="butt"
     />
 
-    <!-- @todo extract to text -->
     <text
       :x="center"
       :y="center"

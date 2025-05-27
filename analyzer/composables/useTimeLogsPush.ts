@@ -11,10 +11,13 @@ export function useTimeLogsPush() {
 
     tableInStore.value = [...tableInStore.value, newRecord]
   }
+  const { start, done } = useProcessingState()
 
   function pushNewRecords(newEntries: TimeLog[], tableInStore: Ref<TimeLog[]>) {
+    start('PUSH')
     // 🍍 Handle new data, merge new entries using shallow update composable
     for (const entry of newEntries) pushNewRecord(entry, tableInStore)
+    done('PUSH')
   }
 
   return { pushNewRecord, pushNewRecords }

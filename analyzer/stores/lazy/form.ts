@@ -1,12 +1,3 @@
-/**
- * @todo Test IndexedDB ⭐️ to make the demo work without
- * Firebase, and maybe in the future for a PWA, or even
- * a desktop and mobile app using Electron.
- *
- * @autoImport { useIDBKeyval } from '@vueuse/integrations/useIDBKeyval'
- * @docs https://vueuse.org/integrations/useIDBKeyval/
- */
-
 export const useAnalyzerFormStore = defineStore('form', () => {
   const activity = ref<string>('')
   const durationMinutes = ref<number>(25)
@@ -42,7 +33,10 @@ export const useAnalyzerFormStore = defineStore('form', () => {
   const getTime = () => useDateFormat(useNow(), 'HH:mm:ss').value
   const getDate = () => useDateFormat(useNow(), 'YYYY-MM-DD').value
 
+  const { trigger } = useProcessingState()
+
   const getNewTimeLog = (): TimeLog => {
+    trigger('ADD')
     const { userUid } = useUserAuthState()
 
     const log: TimeLog = {

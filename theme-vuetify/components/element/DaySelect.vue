@@ -3,7 +3,7 @@ const { today } = storeToRefs(useClockStore())
 const { dayToDisplayDate } = storeToRefs(useAnalyzerViewStore())
 
 // Amout days to display in select
-const totalDays = 8
+const totalDays = DAYS_TO_SELECT_LIMIT
 
 const items = computed(() => {
   const result = []

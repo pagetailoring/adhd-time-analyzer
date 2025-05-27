@@ -38,9 +38,11 @@ export function isTimeLogValid(o: unknown): o is TimeLog {
 
   // userId: optional, if present must be a string;
   // if saving to external DB, userId is required and must be a string
-  const hasValidUserId = IS_EXTERNAL_DB
-    ? typeof obj.userId === 'string'
-    : obj.userId === undefined || typeof obj.userId === 'string'
+  const hasValidUserId = true
+  // IS_EXTERNAL_DB && isSave
+  //   ? typeof obj.userId === 'string'
+  //   : obj.userId === undefined || typeof obj.userId === 'string'
+  console.log('@todo !!!! load mode, check user or not')
 
   return (
     hasValidId &&

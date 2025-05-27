@@ -1,84 +1,74 @@
 <script setup lang="ts">
+const { disabled = false } = defineProps<{
+  disabled?: boolean
+}>()
+
 const { useAnalyzerFormStore } = await import('ANALYZER_LAYER/stores/lazy/form')
 const form = useAnalyzerFormStore()
 
-const tagToAdd = ref<undefined | string>()
+const tagsToAdd = ref<string[]>([])
 
 const { saveNew } = useAnalyzerCreate()
 function commit(activity: string, minutes: number) {
   const newLog: TimeLog = form.getNewTimeLog()
-  const { tags: defaultTags } = form.getDefaults(activity) || {}
+
+  if (activity === 'up') tagsToAdd.value = ['sport', 'calisthenics']
+  const newAct = activity !== 'up' ? activity : 'rest'
+
+  const { tags: defaultTags } = form.getDefaults(newAct) || {}
   if (defaultTags) newLog.tags = defaultTags
-  if (tagToAdd.value) newLog.tags.push(tagToAdd.value)
+  if (tagsToAdd.value.length) for (const tag of tagsToAdd.value) newLog.tags.push(tag)
 
   const temp =
-    work.includes(activity) || coding.includes(activity) || activity === 'coding'
+    work.includes(newAct) || coding.includes(newAct) || newAct === 'coding'
       ? newLog.tags.concat(form.trackTags, form.timeTags)
       : newLog.tags.concat(form.timeTags)
 
   newLog.tags = Array.from(new Set(temp))
-  newLog.act = activity
+  newLog.act = newAct
   newLog.dur = minutes
 
   saveNew(newLog)
-  tagToAdd.value = undefined
+  tagsToAdd.value = []
 }
 
 const rest = (minutes: number) => commit('rest', minutes)
-function chaos(minutes = 25) {
-  if (minutes > 25) tagToAdd.value = 'rabbit hole'
-  commit('chaos', minutes)
-}
 </script>
 
 <template>
   <ThemeCard>
-    <UButtonGroup size="xl" class="w-full flex-wrap lg:flex-nowrap self-start">
-      <UBadge>
-        <small :class="styleUp">Short<wbr />cuts:</small>
+    <UButtonGroup size="xl" class="w-full flex-wrap self-start lg:flex-nowrap">
+      <UBadge :class="{ disabled }" class="justify-center">
+        <small class="up sm:hidden md:block">Short<wbr />cuts:</small>
+        <small class="up hidden sm:block md:hidden">SC:</small>
       </UBadge>
 
-      <UBadge color="primary" :class="styleUp" style="text-sm" label="Rest" />
+      <UBadge :class="{ disabled }" color="primary" class="up text-xs" label="Rest" />
       <UiButton
         color="primary"
-        class="max-sm:grow justify-center"
+        class="justify-center max-sm:grow"
         label="3 min."
+        :disabled
         @click="rest(3)"
       />
-      <UiButton color="primary" label="5 min." @click="rest(5)" />
-      <UiButton color="primary" label="15 min." class="grow justify-center" @click="rest(15)" />
+      <UiButton color="primary" label="5 min." class="text-sm" :disabled @click="rest(5)" />
+      <UiButton color="primary" label="15 min." class="text-sm" :disabled @click="rest(15)" />
+
+      <UiButton color="success" class="text-xs" label="UP1" :disabled @click="commit('up', 1)" />
+      <UiButton color="success" class="text-xs" label="UP3" :disabled @click="commit('up', 3)" />
 
       <UiButton
         label="Cleaning"
-        :class="styleUp"
-        class="opacity-90 grow justify-center text-sm"
+        class="up grow justify-center text-xs opacity-90"
+        :disabled
         @click="commit('cleaning', 25)"
       />
 
-      <UiButton color="warning" label="Chaos" :class="styleUp" @click="chaos(25)" />
-      <UiButton
-        color="warning"
-        class="max-sm:grow justify-center"
-        label="40 min."
-        @click="chaos(40)"
-      />
-      <UiButton color="warning" label="60 min." @click="chaos(60)" />
-
       <UTooltip text="Test: +1min coding" :content="{ side: 'left' }">
-        <UiButton label="+" @click="commit('coding', 1)" />
+        <UiButton label="+" :disabled @click="commit('coding', 1)" />
       </UTooltip>
 
-      <UiButton
-        color="info"
-        label="coding"
-        :class="styleUp"
-        class="grow justify-center"
-        @click="commit('coding', 25)"
-      />
-
-      <UBadge class="hidden xl:block content-center text-xs" :class="styleUp">
-        25 min. default
-      </UBadge>
+      <UiButton :disabled="true" label="Wizzard" class="up h-10 grow justify-center text-xs" />
     </UButtonGroup>
   </ThemeCard>
 </template>

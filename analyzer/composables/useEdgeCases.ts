@@ -49,8 +49,10 @@ export function useEdgeCases(
   }
 
   const message = '⚙️ Processing logs:'
+  const { start, done } = useProcessingState()
 
   function processEdgeCases(logs: Ref<TimeLog[]>, displayedDaysCount: Ref<number>) {
+    start('edgeCases')
     // ⚙️ processing edge cases
     const nowHour = getNowHour(now)
     const length = logs.value.length
@@ -80,6 +82,7 @@ export function useEdgeCases(
     }
 
     console.log(message, length, 'end.')
+    done('edgeCases')
   }
 
   // helpers

@@ -5,15 +5,7 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui'],
   $meta: { name: 'theme-nuxt-ui' },
   imports: {
-    dirs: [
-      'components',
-      'components/app',
-      'components/new-logs',
-      'composable',
-      'types',
-      'utils',
-      'utils/tables',
-    ],
+    dirs: ['components', 'components/app', 'components/new-logs', 'composable', 'types', 'utils'],
   },
   devtools: { enabled: true },
 })

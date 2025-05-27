@@ -1,4 +1,4 @@
-export const useAnalizerArchiveStatsStore = defineStore('archiveStats', () => {
+export const useAnalyzerArchiveStatsStore = defineStore('archiveStats', () => {
   const { effectiveDayStart, dayStartAt, totalTrackedMinutes, totalTrackedTime } =
     storeToRefs(useAnalyzerSummaryStore())
   const { isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
@@ -16,15 +16,15 @@ export const useAnalizerArchiveStatsStore = defineStore('archiveStats', () => {
   const archiveDaysTableRows = computed<StatsTabbleRow[]>(() => {
     if (isTodayDataDisplayed.value) return []
 
-    return [
-      { label: 'start at:', data: dayStartAt.value },
-      { label: 'tracked:', data: totalTrackedTime.value, color: 'text' },
-      { label: 'tracked:', data: `${totalTrackedMinutes.value} min.` },
-      { label: 'end at:', data: dayEndsAt.value },
-    ]
+    return getSummaryStatsTable(
+      dayStartAt.value,
+      totalTrackedTime.value,
+      totalTrackedMinutes.value,
+      dayEndsAt.value
+    )
   })
 
-  return { archiveDaysTableRows }
+  return { archiveDaysTableRows, dayEndsAt }
 })
 
-export type AnalizerArchiveStatsStore = ReturnType<typeof useAnalizerArchiveStatsStore>
+export type AnalizerArchiveStatsStore = ReturnType<typeof useAnalyzerArchiveStatsStore>

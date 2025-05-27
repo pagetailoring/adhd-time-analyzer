@@ -51,5 +51,63 @@ export function useGroupSumsChartMethods(groupSums: Ref<Record<string, number>>)
    */
   const addNewLabelToGroupSum = (label: string, val: number) => groupSumsUpdate(label, val)
 
-  return { addNewLabelToGroupSum, applyLabelDeltaToGroupSum, recalculateAllGroupTotals }
+  const { start, done } = useProcessingState()
+
+  // Internal previous state for incremental updates
+  let previousData: SummaryItem[] = []
+
+  function updateGroupSumsIncrementallyOrFully(newData: SummaryItem[]) {
+    start('4grs')
+
+    if (newData.length === previousData.length) {
+      for (let i = 0; i < newData.length; i++) {
+        const newItem = newData[i]
+        const oldItem = previousData[i]
+        if (newItem.label === oldItem.label && newItem.totalTime !== oldItem.totalTime) {
+          applyLabelDeltaToGroupSum(newItem.label, oldItem.totalTime, newItem.totalTime)
+          previousData = [...newData]
+          done('4grs')
+          return
+        }
+      }
+    }
+
+    // Case: one item added
+    if (newData.length === previousData.length + 1) {
+      const added = newData.find(
+        (item) =>
+          !previousData.some((old) => old.label === item.label && old.totalTime === item.totalTime)
+      )
+      if (added) {
+        addNewLabelToGroupSum(added.label, added.totalTime)
+        previousData = [...newData]
+        done('4grs')
+        return
+      }
+    }
+
+    // Fallback: full recalculation
+    recalculateAllGroupTotals(newData)
+    previousData = [...newData]
+    done('4grs')
+  }
+
+  /**
+   * Computed array of group sums with percentage of total.
+   * @computed groupedArray
+   * @returns Array of objects with group, totalTime, and percent fields
+   * @keywords computed, percentage, visualization
+   */
+  function calculateGroupedArray(groupSums: Record<ColorKey, number>): GroupedBarStats[] {
+    const total = Object.values(groupSums).reduce((acc, val) => acc + val, 0)
+    return Object.entries(groupSums)
+      .filter(([, val]) => val > 0)
+      .map(([group, totalTime]) => ({
+        group,
+        totalTime,
+        percent: total ? (totalTime / total) * 100 : 0,
+      }))
+  }
+
+  return { calculateGroupedArray, updateGroupSumsIncrementallyOrFully }
 }

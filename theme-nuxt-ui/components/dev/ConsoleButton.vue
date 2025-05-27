@@ -5,7 +5,7 @@ function consoleStore() {
 
   const userState = useUserAuthState()
   console.log('main store:', store)
-  console.log('user:', userState)
+  console.log('userState:', userState)
 
   const summary = useAnalyzerSummaryStore()
   console.log('summary data:', summary)
@@ -13,6 +13,7 @@ function consoleStore() {
   const { dayToDisplayDate } = storeToRefs(useAnalyzerViewStore())
   console.log('display:', dayToDisplayDate.value)
   console.log('today:', today.value)
+  console.log('dayToDisplayDate:', store.dayToDisplayDate)
 
   const memory = useAnalyzerMemoryStore()
   console.log('memory:', memory.logs)
@@ -22,7 +23,5 @@ function consoleStore() {
 </script>
 
 <template>
-  <UTooltip text="console @dev">
-    <UiButton trailing-icon="mdi-light:console" @click="consoleStore()" />
-  </UTooltip>
+  <UiButton icon="mdi-light:console" variant="ghost" @click="consoleStore()" />
 </template>

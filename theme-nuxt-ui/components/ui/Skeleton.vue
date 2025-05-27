@@ -1,3 +1,3 @@
 <template>
-  <USkeleton :class="styleBorder" />
+  <USkeleton class="border" />
 </template>

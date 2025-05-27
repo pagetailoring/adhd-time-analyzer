@@ -25,20 +25,19 @@ export const columns: TableColumn<TimeLog>[] = [
   {
     id: 'dur',
     accessorKey: 'dur',
-    header: 'Pomodoro', // @todo <wbr>
     meta: { class: { td: 'text-center min-w-11', th: 'text-center max-w-11' } },
     cell: ({ row }) => `${row.getValue<number>('dur')} min.`,
   },
   {
     accessorKey: 'act',
     header: 'Main',
-    meta: { class: { th: 'pl-5 w-14', td: 'sticky left-0 pl-3 z-10 w-14' } },
+    meta: { class: { th: 'pl-5 w-14', td: 'sticky left-0 pl-3 z-5 w-14' } },
   },
   { accessorKey: 'date', header: 'Date' },
   {
     accessorKey: 'tags',
     header: 'Tags',
-    meta: { class: { th: 'sticky left-3 z-10 w-40', td: 'whitespace-normal min-w-[40rem] w-40' } },
+    meta: { class: { th: 'sticky left-3 z-5 w-40', td: 'whitespace-normal min-w-[40rem] w-40' } },
   },
 
   {

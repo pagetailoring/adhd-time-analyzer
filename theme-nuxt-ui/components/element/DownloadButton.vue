@@ -17,5 +17,5 @@ function downloadLogs() {
 </script>
 
 <template>
-  <UiButton icon="material-symbols:download-rounded" @click="downloadLogs" />
+  <UiButton variant="ghost" icon="material-symbols:download-rounded" @click="downloadLogs" />
 </template>

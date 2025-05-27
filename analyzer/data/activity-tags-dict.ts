@@ -16,6 +16,7 @@ export const life: string[] = [
   'self care',
   'listening',
   'reading',
+  'podcast',
   'watching',
   'go out',
   'get up',
@@ -74,6 +75,8 @@ export const toTrackProjects: string[] = [
   'micro auth app',
   'project x',
   'project y',
+  'project z',
+  'recruitment task',
 ]
 export const toTrackLife: string[] = ['self care', 'sport', 'home stuff']
 
@@ -91,6 +94,13 @@ export const quality: string[] = [
   'by the book',
   'MVP',
   'done is better than perfect',
+  'not enough sleep',
+]
+
+// @new @todo - logic -> mayby show last notes... dynamic local storge
+export const notesHelper: string[] = [
+  'not enough sleep',
+  //
 ]
 
 export const appetite: string[] = ['coffee', 'eat', 'tea', 'water']

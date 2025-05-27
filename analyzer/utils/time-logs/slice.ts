@@ -25,7 +25,7 @@ export function sliceTimeLogs(
 
 // @dev @todo to remove
 function consoleCut(cutDown: boolean, idx: number) {
-  console.log('✂️', cutDown ? 'cut down' : 'CUT UP', 'from', idx, '✂️')
+  console.log('✂️', cutDown ? 'cut down' : 'CUT UP', idx)
 }
 
 /**

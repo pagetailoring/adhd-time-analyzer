@@ -1,7 +1,8 @@
-export const useAnalizerLiveStatsStore = defineStore('live', () => {
+export const useAnalyzerLiveStatsStore = defineStore('live', () => {
   const { effectiveDayStart, dayStartAt, totalTrackedMinutes, totalTrackedTime } =
     storeToRefs(useAnalyzerSummaryStore())
   const { isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
+  // const { isDayInStatsCache } = storeToRefs(useDayStatsCacheBufferStore())
   const { now } = storeToRefs(useClockStore())
 
   // reactive state for live stats
@@ -19,8 +20,11 @@ export const useAnalizerLiveStatsStore = defineStore('live', () => {
     return 'text-muted'
   })
 
+  // const { start, done } = useProcessingState()
+
   // recompute every time "live" should update
   watchEffect(() => {
+    // start('live')
     if (!isTodayDataDisplayed.value || !effectiveDayStart.value) {
       minutesFromDayStart.value = 0
       timeFromDayStart.value = ''
@@ -34,6 +38,7 @@ export const useAnalizerLiveStatsStore = defineStore('live', () => {
     timeFromDayStart.value = formatTime(mins)
     differenceInMinutes.value = totalTrackedMinutes.value - mins
     absDifference.value = Math.abs(differenceInMinutes.value)
+    // done('live')
   })
 
   const todayTableRows = computed<StatsTabbleRow[]>(() => {

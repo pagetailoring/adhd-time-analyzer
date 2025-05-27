@@ -5,9 +5,11 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       'data',
+      'composables/cache',
       'composables/crud',
       'composables/components',
       'stores',
+      'stores/buffer',
       'types',
       'utils',
       'utils/config',

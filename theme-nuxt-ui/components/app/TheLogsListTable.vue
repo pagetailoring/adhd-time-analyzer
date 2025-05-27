@@ -1,19 +1,14 @@
 <script setup lang="ts">
-const { timeLogsToDisplay, isTodayDataDisplayed } = storeToRefs(useAnalyzerViewStore())
+// Check tables grouped by day CACHE data in Local storge
+const { isDayInTableCache, dayTableFromCache } = useDayTablesCacheBuffer()
+
+const { arrayToDisplay, isTodayDataDisplayed: isTodayView } = storeToRefs(useAnalyzerViewStore())
 const table = useTemplateRef('table')
 
-// @test: experimental approach for delaying table rendering
-// @idea: maybe move pushLogic here to have faster count of statystics
-//        what would be more consistent and UI-agnostic
-const data = ref<TimeLog[]>([])
-watch(
-  timeLogsToDisplay,
-  async () => {
-    await nextTick()
-    data.value = timeLogsToDisplay.value
-  },
-  { immediate: true, flush: 'post' }
-)
+const data = computed(() => {
+  if (!isTodayView.value && isDayInTableCache.value) return dayTableFromCache.value
+  return arrayToDisplay.value
+})
 
 /**
  * ⭐️ Main table config is extracted to:
@@ -24,7 +19,10 @@ watch(
  * table-main-sorting.ts
  */
 
-const columnVisibility = ref({ id: false, sort: false, date: false, userId: false })
+const columnVisibility = computed(() => {
+  return { id: false, sort: false, date: false, userId: false, timeAgo: isTodayView.value }
+})
+
 const { display } = useNotifications()
 const { remove } = useAnalyzerDelete()
 
@@ -40,6 +38,7 @@ function noteLength(row: TableRow<TimeLog>): number {
   const note = noteContent(row) as string
   return note && note.length ? note.length : 0
 }
+
 const isNote = (row: TableRow<TimeLog>): boolean => !(noteLength(row) === 0)
 
 const isNoteInTagsSection = (row: TableRow<TimeLog>): boolean =>
@@ -47,6 +46,9 @@ const isNoteInTagsSection = (row: TableRow<TimeLog>): boolean =>
 
 const emit = defineEmits<{ (event: 'isMounted'): void }>()
 onMounted(() => emit('isMounted'))
+
+// @dev - to test stats cache
+const totalDuration = computed(() => data.value.reduce((sum, log) => sum + log.dur, 0))
 </script>
 
 <template>
@@ -57,17 +59,22 @@ onMounted(() => emit('isMounted'))
     :sorting="defaultSorting"
     :column-visibility="columnVisibility"
     :column-pinning="columnPinning"
-    :class="styleBorder"
-    :empty="isTodayDataDisplayed ? 'No today data' : 'No day data'"
+    class="border"
+    :empty="isTodayView ? 'No today data' : 'No day data'"
   >
     <template #dur-header>
-      <span :class="styleUp">Pomo<wbr />doro</span>
+      <span class="up">Pomo<wbr />doro</span>
     </template>
 
     <template #act-cell="{ row }">
-      <UBadge :class="styleUp" :color="getActTagColor(row.original.act) as NuxtUiColor">
+      <UBadge class="up" :color="getActTagColor(row.original.act) as NuxtUiColor">
         {{ row.original.act }}
       </UBadge>
+    </template>
+
+    <template #tags-header>
+      <span class="up">TAGS </span>
+      <span class="lowercase">({{ totalDuration }} min.)</span>
     </template>
 
     <template #tags-cell="{ row }">
@@ -76,8 +83,7 @@ onMounted(() => emit('isMounted'))
           v-if="row.original.qr === 0 || row.original.qr === 2"
           size="sm"
           :color="row.original.qr === 0 ? 'neutral' : 'success'"
-          class="my-1 mx-1"
-          :class="[styleUp]"
+          class="up mx-1 my-1"
           :label="row.original.qr === 0 ? '*Shallow' : '*Deep'"
         />
         <UBadge
@@ -85,16 +91,14 @@ onMounted(() => emit('isMounted'))
           :key="idx"
           size="sm"
           :color="getActTagColor(tag)"
-          class="my-1 mx-1"
-          :class="[styleUp]"
+          class="up mx-1 my-1"
           :label="tag"
         />
         <UBadge
           v-if="isNoteInTagsSection(row)"
           size="sm"
           color="secondary"
-          class="my-1 mx-1"
-          :class="[styleUp]"
+          class="up mx-1 my-1"
           :label="`*${noteContent(row)}`"
         />
       </LazyElementCopyTagsFromLog>
@@ -110,7 +114,7 @@ onMounted(() => emit('isMounted'))
       </template>
     </template>
 
-    <template v-if="isTodayDataDisplayed" #actions-cell="{ row }">
+    <template v-if="isTodayView" #actions-cell="{ row }">
       <LazyThemeDropdownTable :items="rowItemsFor(row)" empty="Brak danych do wyświetlenia" />
     </template>
   </UTable>

@@ -4,6 +4,7 @@ export const useAnalyzerViewStore = defineStore('view', () => {
 
   // 🍍 Display state ---
   const timeLogsToDisplay = ref<TimeLog[]>([])
+  const arrayToDisplay = useDebounce(timeLogsToDisplay, 100)
 
   const { today } = storeToRefs(useClockStore())
   const dayToLoadDate = ref<string>(today.value)
@@ -24,14 +25,20 @@ export const useAnalyzerViewStore = defineStore('view', () => {
   // 🍍 Data fetching logic ----------------
   const { fetchDayData } = useAnalyzerRead()
 
+  // @dev
+  const { start, done } = useProcessingState()
+
   async function getNewDayData(date: string) {
+    start('get')
     // Original logic now uses fetchDayData
     const forceDbFetch = IS_EXTERNAL_DB && isTodayDataDisplayed.value
     const raw = await fetchDayData(date, path, forceDbFetch)
     processIncomingData(raw)
+    done('get')
   }
 
   function processIncomingData(newEntries: TimeLog[]) {
+    console.time('process incoming')
     // Merge new entries, sort, update counters, and handle edge cases
     // 🍍 Handle new data, merge new entries using shallow update composable
     pushNewRecords(newEntries, timeLogsToDisplay)
@@ -40,6 +47,7 @@ export const useAnalyzerViewStore = defineStore('view', () => {
     // 🍍 Edge cases
     displayedDaysCount.value++
     processEdgeCases(timeLogsToDisplay, displayedDaysCount)
+    console.timeEnd('process incoming')
   }
 
   function clearDisplayedData() {
@@ -47,7 +55,15 @@ export const useAnalyzerViewStore = defineStore('view', () => {
     displayedDaysCount.value = 0
   }
 
-  function updateDisplayedDataOnDayChange(date: string) {
+  async function updateDisplayedDataOnDayChange(date: string) {
+    if (!isTodayDataDisplayed.value) {
+      const { useDayTablesCacheBufferStore } = await import('../stores/buffer/tables')
+      const { isDayInTableCache } = storeToRefs(useDayTablesCacheBufferStore())
+
+      // Cancel data processing if data exists in cache memory
+      if (isDayInTableCache.value) return
+    }
+
     clearDisplayedData()
     if (dayToLoadDate.value === date) getNewDayData(date)
     else dayToLoadDate.value = date
@@ -61,6 +77,7 @@ export const useAnalyzerViewStore = defineStore('view', () => {
 
   return {
     timeLogsToDisplay,
+    arrayToDisplay,
 
     processIncomingData,
 

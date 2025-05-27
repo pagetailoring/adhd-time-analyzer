@@ -7,6 +7,6 @@ console.log('✅', 'Firebase Layer')
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   $meta: { name: 'firebase' },
-  imports: { dirs: ['stores/auth'] },
+  imports: { dirs: ['stores/auth', 'types'] },
   devtools: { enabled: true },
 })

@@ -1,9 +1,26 @@
 <script lang="ts" setup>
+const { disabled = false } = defineProps<{
+  disabled?: boolean
+}>()
+
 const { useAnalyzerFormStore } = await import('ANALYZER_LAYER/stores/lazy/form')
 const form = useAnalyzerFormStore()
 const { tags } = storeToRefs(form)
 
 const tagsSelect = [activities, coding, work, life, homeStuff, sport, appetite] as string[][]
+
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
+// https://ui.nuxt.com/components/popover#with-command-palette
 
 type ItemWithChip = {
   label: string
@@ -46,12 +63,14 @@ const content: TooltipContentConfig = { side: 'top' }
         class="w-[calc(100%-2.5rem)]"
         multiple
         :items="tagsItems"
+        :disabled
       />
     </UTooltip>
     <UTooltip text="Set defaults" :content>
       <UiButton
         class="w-[2.5rem]"
         icon="hugeicons:arrow-reload-horizontal"
+        :disabled
         @click="form.resetTags()"
       />
     </UTooltip>

@@ -26,6 +26,8 @@ export const useAnalyzerBufferDayLogsFetchDbOps = async (
   removeLogFromCache: (id?: string) => void
 ) => {
   // methods for handling view data
+  const { start, done } = useProcessingState()
+  start('bufferDB')
   const { processIncomingData } = useAnalyzerViewStore()
   const { remove } = useAnalyzerDelete()
 
@@ -64,10 +66,15 @@ export const useAnalyzerBufferDayLogsFetchDbOps = async (
     await nextTick()
     for (const entry of sorted) removeLogFromCache(entry.id)
 
+    console.log('!!!!!!!!!!!!!!!!')
+    console.log(removals)
+
     await nextTick()
     const count = sorted.length
     const message = `${count}${logWord(count)}removed during DB sync ` + fireIcon
     displayDelete(message, 6000)
     console.log(fireIcon, '🔴', message)
   }
+
+  done('bufferDB')
 }

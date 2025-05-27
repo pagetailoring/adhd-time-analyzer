@@ -1,7 +1,7 @@
-import { getLicensePlugin, moveLicenseFile } from './build/license-handler'
+import { getAliasList } from './build/alias'
 import { logBuildInfoWithComment } from './build/console'
 import { getLayerExtends } from './build/layers'
-import { getAliasList } from './build/alias'
+import { getLicensePlugin, moveLicenseFile } from './build/license-handler'
 import { getThemeKey } from './build/theme-key'
 
 /**

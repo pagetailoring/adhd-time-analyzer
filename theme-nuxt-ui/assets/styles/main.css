@@ -6,7 +6,26 @@
 @import '@nuxt/ui';
 
 @theme {
-  --breakpoint-sc2: 32rem;
-  --breakpoint-sc1: 56.6rem;
+  --breakpoint-sc1: 40.6rem;
 }
 /* break points for shorcuts bar Skeleton: sc2 to 2 lines.. etc. */
+
+.up {
+  @apply tracking-widest uppercase;
+}
+
+.dark {
+  @apply bg-default;
+}
+
+.disabled {
+  @apply cursor-not-allowed opacity-75;
+}
+
+.border {
+  @apply border border-(--ui-border-accented);
+
+  &:not(.rounded-full) {
+    @apply rounded-xl;
+  }
+}
